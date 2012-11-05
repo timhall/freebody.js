@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Freebody Demo</title>
+    </head>
+    <body>
+        <div id="movie"></div>
+
+        <!-- JS Libraries -->
+        <script src="js/lib/bonsai-0.4.1.min.js" type="text/javascript"></script>
+
+        <script>
+            bonsai.run(document.getElementById('movie'), {
+                code: function () {
+                    var square = new Rect(10, 100, 100, 100);
+
+                    square.addTo(stage);
+                    square.fill('green');
+                    square.animate('1.5s', {
+                        rotation: Math.PI,
+                        x: 700,
+                        fillColor: 'green'
+                    });
+                },
+                width: 1000,
+                height: 800
+            });
+        </script>
+    </body>
+</html>
