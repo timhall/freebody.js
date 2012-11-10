@@ -1,10 +1,44 @@
+/**
+ * Body with mass, position, velocity, acceleration, and forces
+ *
+ * Example:
+ * ```
+ * var ball = new Body();
+ *
+ * // Set initial position
+ * ball.x = 10; 
+ * ball.y = 10;
+ *
+ * // Set initial velocity
+ * ball.v = { magnitude: 60, angle: 45 };
+ * 
+ * // Add gravity
+ * ball.a.push({ magnitude: 9.8, angle: 90 });
+ * 
+ * // Check on ball after 3 seconds
+ * // (Advance it 3000 ms into the future)
+ * ball.advance(3000);
+ * 
+ * // Get current velocity in y-direction
+ * var speed = ball.v.y();
+ *
+ * // Strap a rocket to the ball for 8 seconds
+ * ball.forces.push({ magnitude: { value: 100, duration: 8000 }, angle: 270 });
+ * 
+ * // and check on the height after 12 seconds
+ * ball.advance(12000);
+ * var height = ball.y;
+ *
+ * // Finally, set values quickly inline
+ * ball = new Body({ x: 10, y: 10, v: { magnitude: 60, angle: 45 } });
+ * 
+ * ```
+ */
 define(
 ['src/Vector'],
 function (Vector) {
     var
         /**
-         * Body with mass, position, and velocity to apply forces to
-         *
          * @class Body
          * @param {Object} [options]
          *     Any options to set inline (mass, position, etc)
@@ -12,30 +46,17 @@ function (Vector) {
          */
 
         Body = function (options) {
-            this.mass = options.mass || 0;
-            this.position = options.position || { x: 0, y: 0 };
-            this.velocity = options.velocity || new Vector();
-        },
-
-        /**
-         * Progress through time and find the future body state
-         *
-         * @param {Number} time (in ms)
-         */
-
-        progress = function (time) {
             
         },
 
         /**
-         * Apply the given force on the body
+         * Advance through time and find the future body state
          *
-         * @param {Vector} force
-         * @param {Number} [time] (in ms) to apply the force
+         * @param {Number} time (in ms)
          */
 
-        applyForce = function (force, time) {
-             
+        advance = function (time) {
+            
         },
 
         /**
@@ -57,8 +78,7 @@ function (Vector) {
     /*
      * @prototype
      */
-    Body.prototype.progress = progress;
-    Body.prototype.applyForce = applyForce;
+    Body.prototype.advance = advance;
     Body.prototype.x = x;
     Body.prototype.y = y;
 
