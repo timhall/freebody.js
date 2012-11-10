@@ -1,0 +1,2 @@
+{"ts":1352519357710,"silentsave":true,"restoring":false,"patch":[[{"diffs":[[1,"define(\n['src/Vector'],\nfunction (Vector) {\n    describe('Vector Class', function () {\n        \n    });\n});"]],"start1":0,"start2":0,"length1":0,"length2":107}]],"length":107}
+{"contributors":[],"silentsave":false,"ts":1352519472047,"patch":[[{"diffs":[[1,"/// <reference path=\"_references.js\" />\n\n"],[0,"define(\n"]],"start1":0,"start2":0,"length1":8,"length2":49}]],"length":148,"saved":false}

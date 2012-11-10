@@ -1,13 +1,36 @@
 /**
  * Vector class to represent forces, velocities, etc.
+ * 
+ * Example:
+ * ```
+ * var force = new Vector();
+ * 
+ * // Set magnitude and angle of force
+ * force.magnitude = 12;
+ * force.angle = 45;
+ * 
+ * // Get x- and y-components
+ * var forceX = force.x(),
+ *     forceY = force.y();
+ * 
+ * // Can also create force from components
+ * force = new Vector();
+ * force.x(3);
+ * force.y(4);
+ * 
+ * var forceNet = force.magnitude; // = 5
+ * 
+ * // Finally, set values quickly inline
+ * force = new Vector({ magnitude: 12, angle: 45 });
+ * force = new Vector({ x: 3, y: 4 });
+ * 
+ * ```
  */
 define(
 [],
 function () {
     var 
         /**
-         * Base object for representing vectors
-         *
          * @class Vector
          * @param {Object} [options]
          *     Any options to set inline (magnitude or angle)
@@ -15,8 +38,7 @@ function () {
          */
 
         Vector = function (options) {
-            this.magnitude = options.magnitude || 0;
-            this.angle = options.angle || 0;
+            
         },
 
         /**
@@ -25,7 +47,7 @@ function () {
          * @return {Number} x-component
          */
 
-        xComponent = function () {
+        x = function () {
             // Things to do:
             // 1. Figure out how angles are set
             //     (i.e. where's zero + what direction does it rotate
@@ -39,15 +61,15 @@ function () {
          * @return {Number} y-component
          */
 
-        yComponent = function () {
+        y = function () {
             // Simlar to above
         };
 
     /*
      * @prototype
      */
-    Vector.prototype.xComponent = xComponent;
-    Vector.prototype.yComponent = yComponent;
+    Vector.prototype.x = x;
+    Vector.prototype.y = y;
 
     return Vector;
 });
