@@ -8,6 +8,15 @@
     <body>
         <h1>Freebody!</h1>
 
-        <script src="freebody.js" type="text/javascript"></script>
+        <script src="public/js/require.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            require(
+                ['src/Vector', 'src/Body'],
+                function (Vector, Body) {
+                    window.Vector = Vector;
+                    window.Body = Body;
+                }
+            );
+        </script>
     </body>
 </html>
