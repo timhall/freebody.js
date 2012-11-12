@@ -39,7 +39,10 @@ function (Vector, utils, _) {
     
     var options = {
         // Default timestep (in ms)
-        timestep: 10   
+        timestep: 10,
+        
+        // Set maximum advance time to avoid infinite loops
+        maxAdvanceTime: 30000
     }
     
     /**
@@ -74,6 +77,8 @@ function (Vector, utils, _) {
         
         // Initialize time scale
         this.lifetime = 0;
+        
+        return this;
     };
 
     /**
@@ -93,22 +98,24 @@ function (Vector, utils, _) {
             stopAdvance;
         
         // Set timestep (if undefined)
-        if (!_.isUndefined(timestep)) {
+        if (_.isUndefined(timestep)) {
             // If forces / a is variable or limit isn't a set time, use default, 
             // otherwise set at limit
-            timestep = (body.isVariable() || !_.isNumber(timestep))
+            timestep = (body.isVariable() || !_.isNumber(limit))
                 ? options.timestep : limit;   
         }
         
-        // Create stop advance callback
-        stopAdvance = createStopAdvanceCallback(limit);
-        
-        while(!stopAdvance(body, elapsed)) {
-            // Update elapsed time
-            elapsed += timestep; 
+        if (timestep > 0) {
+            // Create stop advance callback
+            stopAdvance = createStopAdvanceCallback(limit);
             
-            // Move object
-            body.move(timestep);           
+            while(!stopAdvance(body, elapsed) && elapsed < options.maxAdvanceTime) {
+                // Update elapsed time
+                elapsed += timestep; 
+                
+                // Move object
+                body.move(timestep);           
+            }
         }
         
         return body;

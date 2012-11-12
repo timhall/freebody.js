@@ -35,6 +35,16 @@ function (Body, Vector) {
             });   
         });
 
+        describe('Advance', function () {
+            it('should increment lifetime', function () {
+                var body = new Body();
+                
+                expect(body.lifetime).toEqual(0);
+                body.advance(1000);
+                expect(body.lifetime).toEqual(1000);
+            });
+        });
+
         
         // So within the main module this is a group of specs 
         // (Newton's 1st, cute right!)

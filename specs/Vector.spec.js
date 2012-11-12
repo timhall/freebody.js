@@ -15,14 +15,14 @@ function (Vector) {
         });
         
         it('should calculate x-component from magnitude and angle', function () {
-            //vector.magnitude = 2;
-            //vector.angle = 30;
-            shipForce[0].magnitude = 2;
-            shipforce[0].angle = 30;
-            shipforce[1].magnitude = 2;
-            shipforce[1].angle = 60;
+            vector.magnitude = 2;
+            vector.angle = 30;
+            //shipForce[0].magnitude = 2;
+            //shipforce[0].angle = 30;
+            //shipforce[1].magnitude = 2;
+            //shipforce[1].angle = 60;
             
-            expect(roundToDec(vector.x(), 3)).toEqual(roundToDec(Math.sqrt(3), 3) + 1);
+            expect(roundToDec(vector.x(), 3)).toEqual(roundToDec(Math.sqrt(3), 3));
         });
         
         it('should calculate y-component from magnitude and angle', function () {
