@@ -10,7 +10,8 @@ function (Vector) {
     
     describe('Vector Class', function () {
         beforeEach(function () {
-           _spec.vector = new Vector(); 
+           _spec.vector = new Vector();
+           _spec.shipForce = new Vector(); 
         });
         
         it('should calculate x-component from magnitude and angle', function () {

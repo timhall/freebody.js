@@ -50,8 +50,8 @@
 
 
 define(
-[],
-function () {   
+['src/utils'],
+function (utils) {   
     /**
      * @class Vector
      * @param {Object} [options]
@@ -81,12 +81,13 @@ function () {
     Vector.prototype.x = function (newValue) {
         if (newValue !== undefined) {
             // My recommendation:
-            // Keep the y-component fixed, set the x-value,
-            // and then set magnitude and angle
+            // 1. Get the current y-component and keep it fixed, 
+            // 2. Set the x-value,
+            // 3. Set magnitude and angle based on the given x and y-values
             
             return newValue;
         } else {
-            return this.magnitude * Math.cos(radians(this.angle));
+            return this.magnitude * Math.cos(utils.radians(this.angle));
         }
         
             // This looks good Riley! But, we'll put it in the Body class
@@ -111,19 +112,8 @@ function () {
             
             return newValue;
         } else {
-            return this.magnitude * Math.sin(radians(this.angle));
+            return this.magnitude * Math.sin(utils.radians(this.angle));
         }
-    };
-    
-    /**
-     * Determine the radians of a given angle
-     * 
-     * @param {Number} angle in degrees
-     * @return {Number} angle in radians
-     */
-    
-    var radians = function (angle) {
-        return angle * (Math.PI / 180); 
     };
 
     return Vector;
