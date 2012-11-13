@@ -22,7 +22,11 @@
 // var forceNet = force.magnitude; // = 5
 // 
 // // Finally, set values quickly inline
+
+// It's so that we can do this right here:
 // force = new Vector({ magnitude: 12, angle: 45 });
+
+// This is what I was talking about
 // force = new Vector({ x: 3, y: 4 });
 // 
 // ```
@@ -61,10 +65,33 @@ function (utils) {
     
     var Vector = function (options) {
         // Magnitude of the vector
+        
+        // This line is pretty sweet
+        // 1. It checks if options is defined
+        // 2. If (and only if) options is defined, pull out magnitude property
+        // 3. If magnitude is defined use it
+        // 4. Otherwise (||) use default value of 0;
+        
+        // var v = new Vector()
+        // (options is undefined)
+        // (undefined && not checked since the prev is undefined)
+        // this.magnitude = (undefined) || 0; => 0
+        
+        // var v = new Vector({ magnitude: 10 });
+        // options = { magnitude: 10 };
+        // ({...} && options.magnitude) => 10 is returned
+        // this.magnitude = 10 || 0
+        // (since first part is defined, use it and skip 0)
+        
+        
         this.magnitude = (options && options.magnitude) || 0;
         
         // Angle of vector (in degrees)
-        this.angle =(options && options.degress) || 0;
+        this.angle =(options && options.angle) || 0;
+        
+        // Right here :)
+        this.x(options && options.x);
+        this.y(options && options.y);
     };
     
     // This looks good Riley! But, we'll put it in the Body class ;)
@@ -78,14 +105,19 @@ function (utils) {
      * @prototype
      */
 
-    Vector.prototype.x = function (newValue) {
-        if (newValue !== undefined) {
+    Vector.prototype.x = function (xValue) {
+        if (xValue !== undefined) {
             // My recommendation:
             // 1. Get the current y-component and keep it fixed, 
             // 2. Set the x-value,
             // 3. Set magnitude and angle based on the given x and y-values
             
-            return newValue;
+            // Since we need y for both mag. and angle, I'm going to save a copy
+            // so it doesn't change
+            
+            
+            setMagnitudeAndAngle(this, xValue, this.y());
+            return xValue;
         } else {
             return this.magnitude * Math.cos(utils.radians(this.angle));
         }
@@ -106,15 +138,24 @@ function (utils) {
      * @prototype
      */
 
-    Vector.prototype.y = function (newValue) {
-        if (newValue !== undefined) {
-            // Similar to above
-            
-            return newValue;
+    Vector.prototype.y = function (yValue) {
+        if (yValue !== undefined) {
+            setMagnitudeAndAngle(this, this.x(), yValue);
+            return yValue;
         } else {
             return this.magnitude * Math.sin(utils.radians(this.angle));
         }
+    }
+   
+    var setMagnitudeAndAngle = function (vector, xValue, yValue) {
+        // Very generic method for calculating and setting the
+        // magnitude and angle based on given x- and y-values
+        
+        vector.angle = utils.degrees(Math.atan(yValue/xValue));
+        vector.magnitude = Math.sqrt(Math.pow(xValue,2)+Math.pow(yValue,2));
+        
+        // And that's it.
+        
     };
-
     return Vector;
 });

@@ -13,7 +13,12 @@ function () {
         return angle * (Math.PI / 180); 
     };
     
+    var degrees = function (angle) {
+        return angle * (180 / Math.PI);  
+    };
+    
     return {
-        radians: radians
+        radians: radians,
+        degrees: degrees
     };
 });

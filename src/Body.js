@@ -62,7 +62,8 @@ function (Vector, utils, _) {
         
         // Velocity of the body
         if (options && options.v) {
-            // If v is a plain object, create a Vector
+            // If v is a Vector then assign the standar value
+            // If v is a plain object, create a Vector and assign the standard
             this.v = (options.v instanceof Vector)
                 ? options.v 
                 : new Vector(options.v);   
@@ -132,6 +133,10 @@ function (Vector, utils, _) {
         
         if (timestep > 0) {
             // TODO: Apply physics
+            // This order:
+            // Update position based on velocity
+            // Update velocity based on acceleration
+            // Update acceleration based on force
             
             // Update lifetime
             body.lifetime += timestep;
