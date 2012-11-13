@@ -13,10 +13,10 @@ ball.x = 10;
 ball.y = 10;
 
 // Set initial velocity
-ball.v = { magnitude: 60, angle: 45 };
+ball.v = new Vector({ magnitude: 60, angle: 45 });
 
 // Add gravity
-ball.a.push({ magnitude: 9.8, angle: 90 });
+ball.a.push(new Vector({ magnitude: 9.8, angle: 90 }));
 
 // Check on ball after 3 seconds
 // (Advance it 3000 ms into the future)
@@ -26,7 +26,7 @@ ball.advance(3000);
 var speed = ball.v.y();
 
 // Strap a rocket to the ball for 8 seconds
-ball.forces.push({ magnitude: { value: 100, duration: 8000 }, angle: 270 });
+ball.forces.push(new Vector({ magnitude: { value: 100, duration: 8000 }, angle: 270 }));
 
 // and check on the height after 12 seconds
 ball.advance(12000);

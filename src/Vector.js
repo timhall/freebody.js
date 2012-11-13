@@ -54,17 +54,17 @@
 
 
 define(
-['src/utils'],
-function (utils) {   
+['src/utils', 'public/js/lodash.min'],
+function (utils, _) {   
     /**
      * @class Vector
      * @param {Object} [options]
      *     Any options to set inline (magnitude or angle)
-     * @return {Object} Vector
+     * @chainable
      */ 
     
     var Vector = function (options) {
-        // Magnitude of the vector
+        var vector = this;
         
         // This line is pretty sweet
         // 1. It checks if options is defined
@@ -83,15 +83,18 @@ function (utils) {
         // this.magnitude = 10 || 0
         // (since first part is defined, use it and skip 0)
         
-        
-        this.magnitude = (options && options.magnitude) || 0;
+        // Magnitude of the vector
+        vector.magnitude = (options && options.magnitude) || 0;        
         
         // Angle of vector (in degrees)
-        this.angle =(options && options.angle) || 0;
+        vector.angle =(options && options.angle) || 0;
         
         // Right here :)
-        this.x(options && options.x);
-        this.y(options && options.y);
+        vector.x(options && options.x);
+        vector.y(options && options.y);
+        
+        // Chainable
+        return vector;
     };
     
     // This looks good Riley! But, we'll put it in the Body class ;)
@@ -107,15 +110,6 @@ function (utils) {
 
     Vector.prototype.x = function (xValue) {
         if (xValue !== undefined) {
-            // My recommendation:
-            // 1. Get the current y-component and keep it fixed, 
-            // 2. Set the x-value,
-            // 3. Set magnitude and angle based on the given x and y-values
-            
-            // Since we need y for both mag. and angle, I'm going to save a copy
-            // so it doesn't change
-            
-            
             setMagnitudeAndAngle(this, xValue, this.y());
             return xValue;
         } else {
@@ -147,15 +141,55 @@ function (utils) {
         }
     }
    
-    var setMagnitudeAndAngle = function (vector, xValue, yValue) {
-        // Very generic method for calculating and setting the
-        // magnitude and angle based on given x- and y-values
+    /**
+     * Create time-based vector
+     * 
+     * @param {Object} options
+     * @param {Number} duration (in ms)
+     * @return {Function} vector function that takes elapsed time as argument
+     * @static
+     */
+    
+    // Create a vector with duration
+    Vector.createWithDuration = function (options, duration) {
+        // Create static vector value
+        var value = new Vector(stripDuration(options));
         
-        vector.angle = utils.degrees(Math.atan(yValue/xValue));
-        vector.magnitude = Math.sqrt(Math.pow(xValue,2)+Math.pow(yValue,2));
+        // Create duration vector function
+        var durationVector = function (elapsed) {
+            durationVector.lifetime += (elapsed || 0);
+            
+            if (durationVector.lifetime < durationVector.duration) {
+                return value;
+            } else {
+                return null;  
+            }
+        };
         
-        // And that's it.
+        // Add lifetime and duration properties
+        durationVector.lifetime = 0;
+        durationVector.duration = (duration || 0);
         
+        return durationVector;
     };
+    
+    
+    // Very generic method for calculating and setting the
+    // magnitude and angle based on given x- and y-values
+    var setMagnitudeAndAngle = function (vector, xValue, yValue) {
+        vector.angle = utils.degrees(Math.atan(yValue/xValue));
+        vector.magnitude = utils.hypotenuse(xValue, yValue);
+        // vector.magnitude = Math.sqrt(Math.pow(xValue, 2) + Math.pow(yValue, 2));
+    };
+    
+    // Strip duration from magnitude
+    var stripDuration = function (options) {
+        // Update magnitude to include just value
+        delete options.duration;
+        
+        // Return everything else unmodified
+        return options;
+    };
+    
     return Vector;
 });
