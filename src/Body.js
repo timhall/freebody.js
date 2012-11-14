@@ -127,11 +127,8 @@ function (Vector, utils, _) {
                 // hits close to limit
                 timestep = limit / Math.ceil(limit / Body.options.timestep);
             } else {
-                timestep = Body.options.timestep;   
-            }
-            
-            timestep = (body.isVariable() || !_.isNumber(limit))
-                ? Body.options.timestep : limit;   
+                timestep = _.isNumber(limit) ? limit : Body.options.timestep;   
+            } 
         }
         
         if (timestep > 0) {
@@ -157,10 +154,7 @@ function (Vector, utils, _) {
      * @chainable
      */
     Body.prototype.move = function (timestep) {
-        var body = this,
-            vX = body.v.x(),
-            vY = body.v.y(),
-            force = body.netForce();
+        var body = this;
         
         // Convert timestep from ms to s
         timestep = timestep / 1000;
@@ -169,18 +163,11 @@ function (Vector, utils, _) {
             // TODO: Apply physics
             // This order:
             // 1. Update position based on velocity
-            body.x += vX * timestep;
-            body.y += vY * timestep;
-            //
+            
             // These 2, we'll have to think about which comes first
             // (but I'm pretty sure this is right)
             // 2. Set acceleration based on force
-            body.a.x(force.x() / body.mass);
-            body.a.y(force.y() / body.mass);
-            
             // 3. Update velocity based on acceleration
-            body.v.x(vX + body.a.x() * timestep);
-            body.v.y(vY + body.a.y() * timestep);
             
             // Update lifetime
             body.lifetime += timestep;
@@ -238,22 +225,7 @@ function (Vector, utils, _) {
             forceValue;
         
         _.each(body.forces, function (force) {
-            forceValue = (_.isFunction(force)) 
-                // TODO: decide on force parameters (body is a given though)
-                ? force(body) 
-                : force;
             
-            // Same as above (yay for ternary operators!)
-            /*if (_.isFunction(force)) {
-                forceValue = force();
-            else {
-                forceValue = force;   
-            }*/
-            
-            if (forceValue instanceof Vector) {
-                netForceX += forceValue.x();
-                netForceY += forceValue.y();
-            }
         });
         
         // Set the x and y components of the net force
