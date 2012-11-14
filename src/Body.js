@@ -51,7 +51,7 @@ function (Vector, utils, _) {
         
         // Velocity of the body
         if (options && options.v) {
-            // If v is a Vector then assign the standar value
+            // If v is a Vector then assign the standard value
             // If v is a plain object, create a Vector and assign the standard
             this.v = (options.v instanceof Vector)
                 ? options.v 
@@ -61,7 +61,8 @@ function (Vector, utils, _) {
             this.v = new Vector();
         }
         
-        // TODO: Set a similar to velocity above
+        // TODO: Set 'a' similar to velocity above
+        this.a = new Vector();
         
         // Initialize forces
         this.forces = [];
@@ -75,10 +76,13 @@ function (Vector, utils, _) {
     // Set global options for Body
     Body.options = {
         // Default timestep (in ms)
-        timestep: 10,
+        timestep: 8,
         
         // Set maximum advance time to avoid infinite loops
-        maxAdvanceTime: 30000
+        maxAdvanceTime: 30000,
+        
+        // Precision of calculations
+        precision: 0.00001
     };
 
     /**
@@ -118,6 +122,14 @@ function (Vector, utils, _) {
         if (_.isUndefined(timestep)) {
             // If forces / a is variable or limit isn't a set time, use default, 
             // otherwise set at limit
+            if (body.isVariable() && _.isNumber(limit)) {
+                // If the limit is set a defined time, divide the timestep so that it
+                // hits close to limit
+                timestep = limit / Math.ceil(limit / Body.options.timestep);
+            } else {
+                timestep = Body.options.timestep;   
+            }
+            
             timestep = (body.isVariable() || !_.isNumber(limit))
                 ? Body.options.timestep : limit;   
         }
@@ -145,17 +157,30 @@ function (Vector, utils, _) {
      * @chainable
      */
     Body.prototype.move = function (timestep) {
-        var body = this;
+        var body = this,
+            vX = body.v.x(),
+            vY = body.v.y(),
+            force = body.netForce();
+        
+        // Convert timestep from ms to s
+        timestep = timestep / 1000;
         
         if (timestep > 0) {
             // TODO: Apply physics
             // This order:
             // 1. Update position based on velocity
+            body.x += vX * timestep;
+            body.y += vY * timestep;
             //
             // These 2, we'll have to think about which comes first
             // (but I'm pretty sure this is right)
             // 2. Set acceleration based on force
+            body.a.x(force.x() / body.mass);
+            body.a.y(force.y() / body.mass);
+            
             // 3. Update velocity based on acceleration
+            body.v.x(vX + body.a.x() * timestep);
+            body.v.y(vY + body.a.y() * timestep);
             
             // Update lifetime
             body.lifetime += timestep;
@@ -181,7 +206,8 @@ function (Vector, utils, _) {
     /**
      * Convience method for getting current state of Body
      * 
-     * @Return {Object}
+     * @return {Object}
+     * @prototype
      */
     
     Body.prototype.state = function () {
@@ -196,6 +222,45 @@ function (Vector, utils, _) {
             // TODO: This should be eventually return the net acceleration
             // a: this.a
         };
+    };
+    
+    /**
+     * Calculate the net force currently acting on the body
+     * 
+     * @return {Vector}
+     * @prototype
+     */
+    
+    Body.prototype.netForce = function () {
+        var body = this,
+            netForceX = 0,
+            netForceY = 0,
+            forceValue;
+        
+        _.each(body.forces, function (force) {
+            forceValue = (_.isFunction(force)) 
+                // TODO: decide on force parameters (body is a given though)
+                ? force(body) 
+                : force;
+            
+            // Same as above (yay for ternary operators!)
+            /*if (_.isFunction(force)) {
+                forceValue = force();
+            else {
+                forceValue = force;   
+            }*/
+            
+            if (forceValue instanceof Vector) {
+                netForceX += forceValue.x();
+                netForceY += forceValue.y();
+            }
+        });
+        
+        // Set the x and y components of the net force
+        return new Vector({ 
+            x: netForceX, 
+            y: netForceY
+        });
     };
     
     // Create stop advance callback based on the specified limit
@@ -231,6 +296,22 @@ function (Vector, utils, _) {
                     // Pick out the values from state that are specified in limit
                     _.pick(body.state(), _.keys(limit))
                 );
+                
+                /*
+                isEqual compares too objects
+                limit = { v: 10 } (Stop when v = 10)
+                isEqual({ v: 10 }, (state) { v: 10 }) => true
+                
+                since the state might include extra things which would mess up isEqual
+                isEqual({ v: 10 }, { x: 100, v: 10 }) => false
+                
+                we pick out only the parts of the state that we need
+                _.keys(limit) = ['v']
+                _.pick({ x: 100, v: 10 }, ['v']) => { v: 10 }
+                
+                which is then good to compare to the limit
+                isEqual({ v: 10 }, ...) => true
+                */
             };
             
         } else {

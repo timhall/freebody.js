@@ -97,6 +97,11 @@ function (utils, _) {
         return vector;
     };
     
+    // Global options
+    Vector.options = {
+        precision: 0.00001   
+    };
+    
     // This looks good Riley! But, we'll put it in the Body class ;)
     // var shipForce = new Vector();
 
@@ -113,7 +118,7 @@ function (utils, _) {
             setMagnitudeAndAngle(this, xValue, this.y());
             return xValue;
         } else {
-            return this.magnitude * Math.cos(utils.radians(this.angle));
+            return this.magnitude * Math.cos(utils.radians(this.angle));                
         }
         
             // This looks good Riley! But, we'll put it in the Body class
@@ -139,7 +144,7 @@ function (utils, _) {
         } else {
             return this.magnitude * Math.sin(utils.radians(this.angle));
         }
-    }
+    };
    
     /**
      * Create time-based vector
