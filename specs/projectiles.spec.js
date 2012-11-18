@@ -18,35 +18,33 @@ function (Body, Vector, gravity, utils) {
         
         it('a) Maximum range of the projectile', function () {
             //_spec.projectile.advance({ x: 0, y: { gt: 0 } });
-            expect(_spec.projectile.v.x()).toBeCloseTo(20.46);
             _spec.projectile.advance(6.89*1000);
             expect(_spec.projectile.v.x()).toBeCloseTo(20.46);
-            expect(_spec.projectile.x).toBeCloseTo(140.9694);
-            //console.log('Maximum range: ', _spec.projectile.x);
+            expect(_spec.projectile.x).toBeCloseTo(140.998);
         });
         
         it('b) Maximum height of the projectile', function () {
             _spec.projectile.advance(3.44*1000);
-            console.log('Maximum height: ', _spec.projectile.y); 
+            expect(_spec.projectile.y).toBeCloseTo(58.117);
         });
         
         it('c) Time of flight for the projectile', function () {
             //_spec.projectile.advance({ x: 0, y: { gt: 0 } });
             _spec.projectile.advance(6.89*1000);
-            console.log('Time of flight: ', _spec.projectile.lifetime); 
+            expect(_spec.projectile.lifetime).toEqual(6890);
         });
         
         it('d) Maximum range if the projectile mass was changed to 40.00kg', function () {
             _spec.projectile.m = 40;
             //_spec.projectile.advance({ x: 0, y: { gt: 0 } });
             _spec.projectile.advance(6.89*1000);
-            console.log('Maximum range: ', _spec.projectile.x);
+            expect(_spec.projectile.x).toBeCloseTo(140.998);
         });
         
         it('e) Angle of impact', function () {
             _spec.projectile.advance(6.89*1000);
             //_spec.projectile.advance({ x: 0, y: { gt: 0 } });
-            console.log('Angle of impact: ', _spec.projectile.v.angle);
+            expect(_spec.projectile.v.angle).toBeCloseTo(-58.77);
             
             console.log(_spec.projectile);
             window.body = _spec.projectile;

@@ -159,7 +159,8 @@ function (Vector, utils, _) {
         var vY = body.v.y();
         var netForce = body.netForce();
         
-        // Convert timestep from ms to s
+        // Update lifetime and convert timestep from ms to s
+        body.lifetime += timestep;
         timestep = timestep / 1000;
         
         if (timestep > 0) {
@@ -178,9 +179,6 @@ function (Vector, utils, _) {
             // 3. Update velocity based on acceleration
             body.v.x(body.v.x() + (body.a.x() * timestep)); // m/s = m/s + m/s^2 * s (good)
             body.v.y(body.v.y() + (body.a.y() * timestep));
-            
-            // Update lifetime
-            body.lifetime += timestep;
         }
         
         return body;
