@@ -17,10 +17,6 @@ function (Vector, _) {
         it('should calculate x-component from magnitude and angle', function () {
             _spec.vector.magnitude = 2;
             _spec.vector.angle = 30;
-            //shipForce[0].magnitude = 2;
-            //shipforce[0].angle = 30;
-            //shipforce[1].magnitude = 2;
-            //shipforce[1].angle = 60;
             
             expect(_spec.vector.x()).toBeCloseTo(Math.sqrt(3));
         });
@@ -66,6 +62,19 @@ function (Vector, _) {
             
             expect(_spec.vector.magnitude).toBeCloseTo(2, 0.00001);
             expect(_spec.vector.angle).toBeCloseTo(60)
+        });
+        
+        it('should set magnitude and angle to 0 with 0 x and y components', function () {
+            expect(_spec.vector.magnitude).toEqual(0);
+            expect(_spec.vector.angle).toEqual(0);
+            
+            _spec.vector.x(0);
+            _spec.vector.y(0);
+            
+            expect(_spec.vector.magnitude).toEqual(0);
+            expect(_spec.vector.angle).toEqual(0);
+            expect(_spec.vector.x()).toEqual(0);
+            expect(_spec.vector.y()).toEqual(0);
         });
         
         describe('Time-based vectors', function () {

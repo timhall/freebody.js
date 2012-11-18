@@ -182,9 +182,13 @@ function (utils, _) {
     // Very generic method for calculating and setting the
     // magnitude and angle based on given x- and y-values
     var setMagnitudeAndAngle = function (vector, xValue, yValue) {
-        vector.angle = utils.degrees(Math.atan(yValue/xValue));
-        vector.magnitude = utils.hypotenuse(xValue, yValue);
-        // vector.magnitude = Math.sqrt(Math.pow(xValue, 2) + Math.pow(yValue, 2));
+        if (xValue === 0 && yValue === 0) {
+            vector.angle = 0;
+            vector.magnitude = 0;
+        } else {
+            vector.angle = utils.degrees(Math.atan(yValue/xValue));
+            vector.magnitude = utils.hypotenuse(xValue, yValue);
+        }
     };
     
     // Strip duration from magnitude

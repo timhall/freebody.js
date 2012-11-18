@@ -1,4 +1,4 @@
-/**131-146 PONDER THAT
+/*
  * Body with mass, position, velocity, acceleration, and forces
  */
 // Example:
@@ -155,6 +155,9 @@ function (Vector, utils, _) {
      */
     Body.prototype.move = function (timestep) {
         var body = this;
+        var vX = body.v.x();
+        var vY = body.v.y();
+        var netForce = body.netForce();
         
         // Convert timestep from ms to s
         timestep = timestep / 1000;
@@ -163,11 +166,18 @@ function (Vector, utils, _) {
             // TODO: Apply physics
             // This order:
             // 1. Update position based on velocity
+            body.x = body.x + (vX * timestep); // m = m + m/s * s (woohoo)
+            body.y = body.y + (vY * timestep);
             
             // These 2, we'll have to think about which comes first
             // (but I'm pretty sure this is right)
             // 2. Set acceleration based on force
+            body.a.x(netForce.x() / body.mass); // m/s2 = N/kg (weirdest conversion in Physics, but it's right)
+            body.a.y(netForce.y() / body.mass);
+            
             // 3. Update velocity based on acceleration
+            body.v.x(body.v.x() + (body.a.x() * timestep)); // m/s = m/s + m/s^2 * s (good)
+            body.v.y(body.v.y() + (body.a.y() * timestep));
             
             // Update lifetime
             body.lifetime += timestep;
@@ -225,7 +235,7 @@ function (Vector, utils, _) {
             forceValue;
         
         _.each(body.forces, function (force) {
-            
+            // TODO: This needs to be done...
         });
         
         // Set the x and y components of the net force

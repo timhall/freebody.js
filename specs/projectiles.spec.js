@@ -13,35 +13,38 @@ function (Body, Vector, gravity, utils) {
             });
             
             // This applies simple gravity to the body
-            //
+            gravity.simple(_spec.projectile);
         });
         
         it('a) Maximum range of the projectile', function () {
             //_spec.projectile.advance({ x: 0, y: { gt: 0 } });
-            //_spec.projectile.advance(6.89*1000);
-            console.log('Maximum range: ', _spec.projectile.x);
+            expect(_spec.projectile.v.x()).toBeCloseTo(20.46);
+            _spec.projectile.advance(6.89*1000);
+            expect(_spec.projectile.v.x()).toBeCloseTo(20.46);
+            expect(_spec.projectile.x).toBeCloseTo(140.9694);
+            //console.log('Maximum range: ', _spec.projectile.x);
         });
         
         it('b) Maximum height of the projectile', function () {
-            //_spec.projectile.advance(3.44*1000);
+            _spec.projectile.advance(3.44*1000);
             console.log('Maximum height: ', _spec.projectile.y); 
         });
         
         it('c) Time of flight for the projectile', function () {
             //_spec.projectile.advance({ x: 0, y: { gt: 0 } });
-            //_spec.projectile.advance(6.89*1000);
+            _spec.projectile.advance(6.89*1000);
             console.log('Time of flight: ', _spec.projectile.lifetime); 
         });
         
         it('d) Maximum range if the projectile mass was changed to 40.00kg', function () {
             _spec.projectile.m = 40;
             //_spec.projectile.advance({ x: 0, y: { gt: 0 } });
-            //_spec.projectile.advance(6.89*1000);
+            _spec.projectile.advance(6.89*1000);
             console.log('Maximum range: ', _spec.projectile.x);
         });
         
         it('e) Angle of impact', function () {
-            //_spec.projectile.advance(6.89*1000);
+            _spec.projectile.advance(6.89*1000);
             //_spec.projectile.advance({ x: 0, y: { gt: 0 } });
             console.log('Angle of impact: ', _spec.projectile.v.angle);
             
