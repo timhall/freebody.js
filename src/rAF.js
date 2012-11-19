@@ -9,7 +9,7 @@
 
 (function () {
     var lastTime = 0,
-        vendors = ['ms', 'moz', 'webkit', 'o'],
+        vendors = ['webkit', 'ms', 'moz', 'o'],
         // Feature check for performance (high-resolution timers)
         hasPerformance = !!(window.performance && window.performance.now);
 
@@ -21,10 +21,11 @@
 
     if (!window.requestAnimationFrame) {
         window.requestAnimationFrame = function(callback, element) {
-            var currTime = new Date().getTime();
-            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
-              timeToCall);
+            var currTime = new Date().getTime(),
+                timeToCall = Math.max(0, 16 - (currTime - lastTime)),
+                id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+                    timeToCall);
+            
             lastTime = currTime + timeToCall;
             return id;
         };

@@ -186,7 +186,10 @@ function (utils, _) {
             vector.angle = 0;
             vector.magnitude = 0;
         } else {
-            vector.angle = utils.degrees(Math.atan(yValue/xValue));
+            var angle = utils.degrees(Math.atan(yValue/xValue));
+            
+            // BUGFIX: Due to atan limitation, need to add 180 to angle for neg. x values
+            vector.angle = xValue >= 0 ? angle : angle + 180;
             vector.magnitude = utils.hypotenuse(xValue, yValue);
         }
     };

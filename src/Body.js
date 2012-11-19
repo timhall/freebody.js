@@ -173,8 +173,10 @@ function (Vector, utils, _) {
             // These 2, we'll have to think about which comes first
             // (but I'm pretty sure this is right)
             // 2. Set acceleration based on force
-            body.a.x(netForce.x() / body.mass); // m/s2 = N/kg (weirdest conversion in Physics, but it's right)
-            body.a.y(netForce.y() / body.mass);
+            
+            // Bugfix: only want to update if mass is > 0
+            body.a.x(body.mass > 0 ? netForce.x() / body.mass : 0); // m/s2 = N/kg (weirdest conversion in Physics, but it's right)
+            body.a.y(body.mass > 0 ? netForce.y() / body.mass : 0);
             
             // 3. Update velocity based on acceleration
             body.v.x(body.v.x() + (body.a.x() * timestep)); // m/s = m/s + m/s^2 * s (good)
@@ -231,9 +233,15 @@ function (Vector, utils, _) {
             netForceX = 0,
             netForceY = 0,
             forceValue;
-        
+            
         _.each(body.forces, function (force) {
             // TODO: This needs to be done...
+            // Here's the issue though,
+            // force could be a Vector or a function returning a Vector
+            // So if (is function) evaluate force function
+            forceValue = (_.isFunction(force)) ? force() : force;
+            netForceX += forceValue.x();
+            netForceY += forceValue.y();
         });
         
         // Set the x and y components of the net force

@@ -77,6 +77,17 @@ function (Vector, _) {
             expect(_spec.vector.y()).toEqual(0);
         });
         
+        it('should correctly handle negative vectors', function () {
+            _spec.vector.magnitude = 10;
+            _spec.vector.angle = 180;
+            expect(_spec.vector.x()).toEqual(-10);
+            
+            _spec.vector = new Vector();
+            _spec.vector.x(-10);
+            expect(_spec.vector.magnitude).toEqual(10);
+            expect(_spec.vector.angle).toEqual(180);
+        });
+        
         describe('Time-based vectors', function () {
             beforeEach(function () {
                 _spec.vector = Vector.createWithDuration({ magnitude: 10, angle: 90 }, 2000);

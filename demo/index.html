@@ -10,23 +10,21 @@
 
         <!-- JS Libraries -->
         <script src="js/lib/bonsai-0.4.1.min.js" type="text/javascript"></script>
-
-        <script>
-            bonsai.run(document.getElementById('movie'), {
-                code: function () {
-                    var square = new Rect(10, 100, 100, 100);
-
-                    square.addTo(stage);
-                    square.fill('green');
-                    square.animate('1.5s', {
-                        rotation: Math.PI,
-                        x: 700,
-                        fillColor: 'green'
-                    });
-                },
-                width: 1000,
-                height: 800
-            });
+        <script src="../src/rAF.js" type="text/javascript"></script>
+        <script src="../public/js/require.js" type="text/javascript"></script>
+        <!--<script src="" type="text/javascript"></script>-->
+        
+        <script type="text/javascript">
+            bonsai.setup({
+                runnerContext: bonsai.IframeRunnerContext
+            }).run(
+                document.getElementById('movie'),
+                'js/loaded.js',
+                {
+                    width: 1000,
+                    height: 600
+                }
+            );
         </script>
     </body>
 </html>

@@ -74,5 +74,39 @@ function () {
         return Math.log(number) / Math.LN10;  
     };
     
+    /**
+     * Find the distance between two bodies
+     * 
+     * @param {Body} start
+     * @param {Body} destination
+     * @return {Number} distance
+     */
+    
+    utils.distance = function (start, finish) {
+        return utils.hypoteneuse(Math.abs(start.x-finish.x),Math.abs(start.y-finish.y));
+    };
+    
+    /**
+     * Find the angle between two bodies
+     * (wrt start body)
+     * 
+     * @param {Body} start
+     * @param {Body} destination
+     * @return {Number} angle (in degrees
+     */
+    
+    utils.angle = function (start, finish) {
+        var angle = utils.degrees(Math.atan((Math.abs(start.x-finish.x))/(Math.abs(start.y-finish.y))));
+        
+        // Let's do quadrants
+        // A, x = 3, y = 3, theta = 45, atan(1) = 0.76, 45
+        // B, x = -3, y = 3, theta = 135, atan(-1) = -0.76, -45 -> add 180, 135
+        // C, x = -3, y = -3, theta = -135 / 225, atan(1) = 0.76, 45 -> add 180, 225
+        // D, x = 3, y = -3, theta = -45 / 315, atan(-1) = -0.76, -45
+        // -> whenever x is negative, add 180
+        
+        return (finish.x-start.x < 0) ? angle + 180 : angle;
+    };
+    
     return utils;
 });
