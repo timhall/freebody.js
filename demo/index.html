@@ -4,6 +4,32 @@
     <head>
         <meta charset="utf-8" />
         <title>Freebody Demo</title>
+        <style>
+            body, html {
+                background: #ccc;
+                padding: 0;
+                margin: 0;
+                height: 100%;
+                width: 100%;
+                overflow: hidden;
+            }
+            #movie {
+                background: #fff;
+                padding: 0;
+                
+                /* Fullscreen */
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                
+                /* Fixed Size
+                margin: 10px auto;
+                width: 1000px;
+                height: 600px;
+                border: solid 1px #999;
+                */
+            }
+        </style>
     </head>
     <body>
         <div id="movie"></div>
@@ -21,8 +47,8 @@
                 document.getElementById('movie'),
                 'js/loaded.js',
                 {
-                    width: 1000,
-                    height: 600
+                    width: window.parent.innerWidth,
+                    height: window.parent.innerHeight
                 }
             );
         </script>

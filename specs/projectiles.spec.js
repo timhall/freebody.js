@@ -48,7 +48,7 @@ function (Body, Vector, gravity, utils) {
             //_spec.projectile.advance({ x: 0, y: { gt: 0 } });
             expect(_spec.projectile.v.angle).toBeCloseTo(-58.7858);
             
-            console.log(_spec.projectile);
+            //console.log(_spec.projectile);
             window.body = _spec.projectile;
             window.utils = utils;
         });

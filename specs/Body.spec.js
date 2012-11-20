@@ -60,17 +60,7 @@ function (Body, Vector) {
             // This is just some sentence to describe the spec
             // Traditional style is that it should begin with 'should'
             // ala It 'should do something cool'
-            xit('An object at rest will remain at rest', function () {
-                
-                // This is the actual code for the spec
-                
-                // First, do some stuff...
-
-                // Then, each spec should have some idea of 'pass/fail'
-
-                expect(2 + 2).toEqual(4);
-                expect(2 + 2).not.toEqual(5);
-                
+            it('An object at rest will remain at rest', function () {                
                 // Check on the body after 30 seconds
                 _spec.atRest.advance(30000);
                 
@@ -80,17 +70,17 @@ function (Body, Vector) {
                 expect(_spec.atRest.y).toEqual(0);
             });
 
-            xit('unless acted on by an unbalanced force', function () {
+            it('unless acted on by an unbalanced force', function () {
                 // Apply an a force for 1 second and then check on it
-                _spec.atRest.forces.push({ magnitude: { value: 4, duration: 1000 }, angle: 45 });
-                _spec.atRest.advance(1000);
-
+                _spec.atRest.forces.push(new Vector({ magnitude: 4, angle: 45 }));
+                _spec.atRest.advance(1000, 10);
+                
                 // Should have moved
                 expect(_spec.atRest.x).not.toEqual(0);
                 expect(_spec.atRest.y).not.toEqual(0);
             });
 
-            xit('An object in motion continues in motion with the same speed and in the same direction', function () {
+            it('An object in motion continues in motion with the same speed and in the same direction', function () {
                 // First, make sure it starts at zero
                 expect(_spec.inMotion.x).toEqual(0);
                 expect(_spec.inMotion.y).toEqual(0);
