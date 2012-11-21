@@ -31,7 +31,7 @@ function (Body, Vector, Engine, gravity) {
         
         
         ball.draw = function () {
-            display.attr({ x: Math.round(ball.x), y: Math.round(ball.y) });
+            display.attr({ x: Math.round(ball.x), y: Math.round(ball.y), opacity: 0 });
         };
         
         ball.update = function (step) {
@@ -49,8 +49,22 @@ function (Body, Vector, Engine, gravity) {
             if (ball.y < -25) { 
                 ball.y = window.parent.innerHeight + 25;   
             }
-            if (ball.v.y() >= 300){
-                ball.reset();
+            if (ball.v.y() >= 100 && display.attr('opacity') == 1){
+                var fadeout = function () {
+                    if (display.attr('opacity') > 0) {
+                        setTimeout(fadeout, 1000/60);
+                        display.attr('opacity', display.attr('opacity') - 0.05);
+                    } else {
+                        ball.reset();        
+                        //display.attr('opacity') = 1.0; (reset fades in now)
+                    }
+                };
+                fadeout();
+                /*
+                for (var i = 1; i <= 0; i += -0.01) {
+                    display.attr({opacity: i});
+                }
+                */
             }
             
             ball.advance(step);
@@ -68,19 +82,29 @@ function (Body, Vector, Engine, gravity) {
             ball.v.y(Math.floor(Math.random() * (50 + 50 + 1)) - 50);
             ball.x = Math.floor(Math.random() * ((window.parent.innerWidth-25) - 25 + 1)) + 25;
             ball.y = Math.floor(Math.random() * ((window.parent.innerHeight-25) - 25 + 1)) + 25;
+            display.attr('opacity', 0)
+            var fadein = function () {
+                if (display.attr('opacity') < 1) {
+                    setTimeout(fadein, 1000/60);
+                    display.attr('opacity', display.attr('opacity') + 0.05);
+                }
+            };
+            fadein();
+            return ball;
             //http://docs.bonsaijs.org/module-filter.filter.Opacity.html
             //for fade in and fade out if i want to be flashy
         }
     
+        ball.create();
         ball.reset();
-        return ball.create();
+        return ball;
     };    
     
     
     
     
     var engine = new Engine(),
-        maxBalls = 50,
+        maxBalls = 4,
         //numBalls = 0,
     
         // Random colors for balls
