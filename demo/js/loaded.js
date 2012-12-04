@@ -31,7 +31,7 @@ function (Body, Vector, Engine, gravity) {
         
         
         ball.draw = function () {
-            display.attr({ x: Math.round(ball.x), y: Math.round(ball.y), opacity: 0 });
+            display.attr({ x: Math.round(ball.x), y: Math.round(ball.y), opacity: 1 });
         };
         
         ball.update = function (step) {
@@ -50,7 +50,7 @@ function (Body, Vector, Engine, gravity) {
                 ball.y = window.parent.innerHeight + 25;   
             }
             if (ball.v.y() >= 100 && display.attr('opacity') == 1){
-                var fadeout = function () {
+                /*var fadeout = function () {
                     if (display.attr('opacity') > 0) {
                         setTimeout(fadeout, 1000/60);
                         display.attr('opacity', display.attr('opacity') - 0.05);
@@ -59,7 +59,7 @@ function (Body, Vector, Engine, gravity) {
                         //display.attr('opacity') = 1.0; (reset fades in now)
                     }
                 };
-                fadeout();
+                fadeout();*/
                 /*
                 for (var i = 1; i <= 0; i += -0.01) {
                     display.attr({opacity: i});
@@ -82,14 +82,14 @@ function (Body, Vector, Engine, gravity) {
             ball.v.y(Math.floor(Math.random() * (50 + 50 + 1)) - 50);
             ball.x = Math.floor(Math.random() * ((window.parent.innerWidth-25) - 25 + 1)) + 25;
             ball.y = Math.floor(Math.random() * ((window.parent.innerHeight-25) - 25 + 1)) + 25;
-            display.attr('opacity', 0)
-            var fadein = function () {
+            //display.attr('opacity', 0)
+            /*var fadein = function () {
                 if (display.attr('opacity') < 1) {
                     setTimeout(fadein, 1000/60);
                     display.attr('opacity', display.attr('opacity') + 0.05);
                 }
             };
-            fadein();
+            fadein();*/
             return ball;
             //http://docs.bonsaijs.org/module-filter.filter.Opacity.html
             //for fade in and fade out if i want to be flashy

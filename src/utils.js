@@ -83,7 +83,7 @@ function () {
      */
     
     utils.distance = function (start, finish) {
-        return utils.hypoteneuse(Math.abs(start.x-finish.x),Math.abs(start.y-finish.y));
+        return utils.hypotenuse(start.x-finish.x,start.y-finish.y);
     };
     
     /**
@@ -96,7 +96,11 @@ function () {
      */
     
     utils.angle = function (start, finish) {
-        var angle = utils.degrees(Math.atan((Math.abs(start.x-finish.x))/(Math.abs(start.y-finish.y))));
+        if (start.y-finish.y === 0) {
+            var angle = 90;
+        } else {
+            var angle = utils.degrees(Math.atan((start.y-finish.y)/(start.x-finish.x)));
+        }
         
         // Let's do quadrants
         // A, x = 3, y = 3, theta = 45, atan(1) = 0.76, 45

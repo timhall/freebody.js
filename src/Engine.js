@@ -44,7 +44,9 @@ function () {
                     // splice(2, 1, 'a', 'b')
                     // just removes stuff if you don't give anything to add
                 } else {
-                    objects[i].update(timestep);   
+                    if (typeof objects[i].update === 'function') {
+                        objects[i].update(timestep);   
+                    }
                 }
             }
         },

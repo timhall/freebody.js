@@ -1,27 +1,40 @@
 //Create Planet with x-position, y-position, mass, and radius
-//
-//Gravitational Constant to put somewhere:
-//const G = 6.67 * Math.pow(10,-11);
-//
-//vector.magnitude should be changed to vector.distance/radius
-//
-//Example equation for finding magnitude of force exerted by a planet's gravity
-//vector.magnitude = (G * planet.mass)/vector.distance; 
-//
 
-
-var Planet = function(options){
-    // Mass of the planet
-    this.mass = (options && options.mass) || 0;
+define(
+['src/Body'],
+function (Body) {
+    var Planet = function (options, Circle, stage) {
+        var planet = this,
+            display;
         
-    // Position of the planet
-    this.x = (options && options.x) || 0;
-    this.y = (options && options.y) || 0;
+        // Planet inherits from body
+        planet = new Body({
+            mass: options && options.mass || 10000000000000000,             //10000000000000000 <- Good Value
+            x: options && options.x || 0,
+            y: options && options.y || 0
+        });
+        
+       
+       
+        planet.draw = function () {
+            display.attr('x', Math.round(planet.x));
+            display.attr('y', Math.round(planet.y));
+        };
+        
+        planet.update = function (step) {
+            
+        };
+        
+        planet.create = function () {
+            display = new Circle(planet.x, planet.y, 50);
+            display.fill('cyan');
+            display.addTo(stage);
+            return planet;
+        };
+        
+        return planet.create();
+    };    
+ 
     
-    //Radius of the planet
-    //This is for collision purposes
-    this.radius = (options && options.y) || 0;
-    
-    
-    
-};
+    return Planet;
+})

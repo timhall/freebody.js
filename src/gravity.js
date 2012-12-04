@@ -31,12 +31,13 @@ function (Vector, utils) { // These are what to load the dependencies as
     gravity.planetary = function (body, planet) {
         //vector.magnitude = (G * planet.mass)/vector.distance;
         var GM = G * planet.mass;
+        var value = new Vector();
         
         g = function() {
-            return new Vector({
-                magnitude: (GM)/Math.pow(utils.distance(body,planet),2) * body.mass,
-                angle: utils.angle(body, planet)
-            });
+            value.magnitude = (GM)/Math.pow(utils.distance(body,planet),1.9) * body.mass;
+            value.angle = utils.angle(body, planet);
+            //console.log(value.angle);         ANGLES ARE FLIPPED ON X AXIS
+            return value;
         };
         
         body.forces.push(g);
