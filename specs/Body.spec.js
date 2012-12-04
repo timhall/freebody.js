@@ -26,12 +26,12 @@ function (Body, Vector) {
             _spec.atRest = new Body({ 
                 mass: 10, 
                 x: 0, y: 0,
-                v: { magnitude: 0, angle: 0 }
+                v: new Vector().magnitude(0).angle(0)
             }); 
             _spec.inMotion = new Body({
                 mass: 10,
                 x: 0, y: 0,
-                v: { magnitude: 1, angle: 0 }
+                v: new Vector().magnitude(1).angle(0)
             });   
         });
 
@@ -46,9 +46,9 @@ function (Body, Vector) {
             
             it('should handle 0 mass w/o NaN', function () {
                 var body = new Body();
-                expect(body.v.magnitude).toEqual(0);
+                expect(body.v.magnitude()).toEqual(0);
                 body.advance(1000);
-                expect(body.v.magnitude).toEqual(0);
+                expect(body.v.magnitude()).toEqual(0);
             });
         });
 

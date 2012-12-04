@@ -10,7 +10,8 @@ function (Body, Vector, gravity, utils) {
         
         beforeEach(function() {
             _spec.projectile = new Body({ 
-                mass: 50, v: { magnitude: 39.47, angle: 58.770 }
+                mass: 50, 
+                v: new Vector().magnitude(39.47).angle(58.770)
             });
             
             // This applies simple gravity to the body
@@ -46,7 +47,7 @@ function (Body, Vector, gravity, utils) {
         it('e) Angle of impact', function () {
             _spec.projectile.advance(6.89*1000);
             //_spec.projectile.advance({ x: 0, y: { gt: 0 } });
-            expect(_spec.projectile.v.angle).toBeCloseTo(-58.7858);
+            expect(_spec.projectile.v.angle()).toBeCloseTo(-58.7858);
             
             //console.log(_spec.projectile);
             window.body = _spec.projectile;

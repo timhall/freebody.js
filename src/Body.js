@@ -38,7 +38,6 @@ function (Vector, utils, _) {
      * @class Body
      * @param {Object} [options]
      *     Any options to set inline (mass, x, y, v, a)
-     * @return {Object} Body
      */
     
     var Body = function (options) {
@@ -55,7 +54,7 @@ function (Vector, utils, _) {
             // If v is a plain object, create a Vector and assign the standard
             this.v = (options.v instanceof Vector)
                 ? options.v 
-                : new Vector(options.v);   
+                : new Vector(); //new Vector(options.v);   
         } else {
             // Initialize v as empty Vector if not given
             this.v = new Vector();
@@ -79,10 +78,7 @@ function (Vector, utils, _) {
         timestep: 8,
         
         // Set maximum advance time to avoid infinite loops
-        maxAdvanceTime: 30000,
-        
-        // Precision of calculations
-        precision: 0.00001
+        maxAdvanceTime: 30000
     };
 
     /**
@@ -245,10 +241,7 @@ function (Vector, utils, _) {
         });
         
         // Set the x and y components of the net force
-        return new Vector({ 
-            x: netForceX, 
-            y: netForceY
-        });
+        return new Vector().x(netForceX).y(netForceY);
     };
     
     // Create stop advance callback based on the specified limit

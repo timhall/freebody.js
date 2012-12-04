@@ -7,7 +7,7 @@ function (Vector, utils) { // These are what to load the dependencies as
     var gravity = {};
     
     gravity.simple = function (body, acceleration) {
-        var value = new Vector({ angle: 90 }); // Change back if needed
+        var value = new Vector().angle(90); // Change back if needed
         
         // g = function (body) { return Vector({ magnitude: force, angle: down }) };
         // body.forces.push(g);
@@ -21,7 +21,7 @@ function (Vector, utils) { // These are what to load the dependencies as
                 magnitude = acceleration * body.mass
             });
             */
-            value.magnitude = acceleration * body.mass;
+            value.magnitude(acceleration * body.mass);
             return value;
         };
         
@@ -34,8 +34,8 @@ function (Vector, utils) { // These are what to load the dependencies as
         var value = new Vector();
         
         g = function() {
-            value.magnitude = (GM)/Math.pow(utils.distance(body,planet),1.9) * body.mass;
-            value.angle = utils.angle(body, planet);
+            value.magnitude((GM)/Math.pow(utils.distance(body,planet),1.9) * body.mass);
+            value.angle(utils.angle(body, planet));
             //console.log(value.angle);         ANGLES ARE FLIPPED ON X AXIS
             return value;
         };

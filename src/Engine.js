@@ -27,7 +27,7 @@ function () {
             // This might be something that is variable later depending on what the device can handle
             // This is a recursive loop
             // (call the update function 1000/60 ms from now)
-            setTimeout(update, 1000/frameRate);
+            // setTimeout(update, 1000/frameRate);
             
             var currTime = +new Date;
             var timestep = currTime - prevTime;
@@ -59,6 +59,8 @@ function () {
             //  frome the browser and when the browser gives us one call the render function
             // (also recursive)
             rAF(render);
+            
+            update();
             
             // Loop through all the objects and draw()
             for (var i = 0; i < objects.length; i += 1) {
