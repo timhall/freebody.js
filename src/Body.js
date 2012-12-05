@@ -1,38 +1,10 @@
 /*
  * Body with mass, position, velocity, acceleration, and forces
  */
-// Example:
-// ```
-// var ball = new Body();
-// 
-// // Set initial position
-// ball.x = 10; 
-// ball.y = 10;
-// 
-// // Set initial velocity
-// ball.v = new Vector({ magnitude: 60, angle: 45 });
-// 
-// // Check on ball after 3 seconds
-// // (Advance it 3000 ms into the future)
-// ball.advance(3000);
-// 
-// // Get current velocity in y-direction
-// var speed = ball.v.y();
-// 
-// // Strap a rocket to the ball for 8 seconds
-// ball.forces.push(Vector.createWithDuration({ magnitude: 100, angle: 270 }, 8000));
-// 
-// // and check on the height after 12 seconds
-// ball.advance(12000);
-// var height = ball.y;
-// 
-// // Finally, set values quickly inline
-// ball = new Body({ x: 10, y: 10, v: { magnitude: 60, angle: 45 } });
-// ```
 
 define(
-['src/Vector', 'src/utils', 'public/js/lodash.min'],
-function (Vector, utils, _) {
+['src/Vector', 'src/utils'],
+function (Vector, utils) {
     
     /**
      * @class Body
@@ -41,38 +13,24 @@ function (Vector, utils, _) {
      */
     
     var Body = function (options) {
-        // Mass of the body
+        // Set the default mass, position, velocity, and acceleration
         this.mass = (options && options.mass) || 0;
-        
-        // Position of the body
         this.x = (options && options.x) || 0;
         this.y = (options && options.y) || 0;
+        this.v = (options && options.v) || new Vector();
+        this.a = (options && options.a) || new Vector();
         
-        // Velocity of the body
-        if (options && options.v) {
-            // If v is a Vector then assign the standard value
-            // If v is a plain object, create a Vector and assign the standard
-            this.v = (options.v instanceof Vector)
-                ? options.v 
-                : new Vector(); //new Vector(options.v);   
-        } else {
-            // Initialize v as empty Vector if not given
-            this.v = new Vector();
-        }
-        
-        // TODO: Set 'a' similar to velocity above
-        this.a = new Vector();
-        
-        // Initialize forces
+        // Initialize forces and lifetime
         this.forces = [];
-        
-        // Initialize time scale
         this.lifetime = 0;
         
         return this;
     };
     
-    // Set global options for Body
+    /**
+     * Global options for body
+     * @static
+     */
     Body.options = {
         // Default timestep (in ms)
         timestep: 8,
@@ -95,15 +53,7 @@ function (Vector, utils, _) {
      * 
      * // Advance the body until the fn returns true
      * body.advance(function () { ... return true; });
-     *
-     * @param {Number|Object|function} limit at which to stop advance
-     *     time (in ms), 
-     *     limit on Body properties (e.g. { x: 10 }), 
-     *     or latch function that returns true when it's time to stop
-     *     Callback form:
-     *       param {Object} body Instance of body
-     *       param {Number} elapsed Time that has elapsed during advance
-     *       return {Boolean} true = stop advance, false = continue
+     * @param {Number|Object|function} limit at which to stop advance (in ms)
      * @param {Number} [timestep] Optional timestep in ms
      *     (Use Body.options.timestep by default)
      * @chainable
@@ -115,15 +65,15 @@ function (Vector, utils, _) {
             stopAdvance;
         
         // Set timestep (if undefined)
-        if (_.isUndefined(timestep)) {
+        if (timestep === undefined) {
             // If forces / a is variable or limit isn't a set time, use default, 
             // otherwise set at limit
-            if (body.isVariable() && _.isNumber(limit)) {
-                // If the limit is set a defined time, divide the timestep so that it
+            if (body.isVariable() && utils.isNumber(limit)) {
+                // If the limit is set at a defined time, divide the timestep so that it
                 // hits close to limit
                 timestep = limit / Math.ceil(limit / Body.options.timestep);
             } else {
-                timestep = _.isNumber(limit) ? limit : Body.options.timestep;   
+                timestep = utils.isNumber(limit) ? limit : Body.options.timestep;   
             } 
         }
         
@@ -160,18 +110,13 @@ function (Vector, utils, _) {
         timestep = timestep / 1000;
         
         if (timestep > 0) {
-            // TODO: Apply physics
-            // This order:
+            // Apply physics
             // 1. Update position based on velocity
             body.x = body.x + (vX * timestep); // m = m + m/s * s (woohoo)
             body.y = body.y + (vY * timestep);
             
-            // These 2, we'll have to think about which comes first
-            // (but I'm pretty sure this is right)
-            // 2. Set acceleration based on force
-            
-            // Bugfix: only want to update if mass is > 0
-            body.a.x(body.mass > 0 ? netForce.x() / body.mass : 0); // m/s2 = N/kg (weirdest conversion in Physics, but it's right)
+            // 2. Set acceleration based on force (only if mass > 0)
+            body.a.x(body.mass > 0 ? netForce.x() / body.mass : 0);
             body.a.y(body.mass > 0 ? netForce.y() / body.mass : 0);
             
             // 3. Update velocity based on acceleration
@@ -190,31 +135,8 @@ function (Vector, utils, _) {
      */
      
     Body.prototype.isVariable = function () {
-        var body = this;
-        
-        // Check if either a or forces contains a function
-        return !!_.find(body.a, _.isFunction) || !!_.find(body.forces, _.isFunction);
-    };
-    
-    /**
-     * Convience method for getting current state of Body
-     * 
-     * @return {Object}
-     * @prototype
-     */
-    
-    Body.prototype.state = function () {
-        return {
-            // Current x and y values
-            x: this.x,
-            y: this.y,
-            
-            // Current velocity
-            v: this.v,
-            
-            // TODO: This should be eventually return the net acceleration
-            // a: this.a
-        };
+        // Check if forces contains a function
+        return !!utils.any(this.forces, utils.isFunction);
     };
     
     /**
@@ -229,16 +151,16 @@ function (Vector, utils, _) {
             netForceX = 0,
             netForceY = 0,
             forceValue;
+        
+        for (var i = 0, max = body.forces.length; i < max; i += 1) {
+            // If force is function evaluate to get vector
+            forceValue = utils.isFunction(body.forces[i]) 
+                ? body.forces[i]() 
+                : body.forces[i];
             
-        _.each(body.forces, function (force) {
-            // TODO: This needs to be done...
-            // Here's the issue though,
-            // force could be a Vector or a function returning a Vector
-            // So if (is function) evaluate force function
-            forceValue = (_.isFunction(force)) ? force() : force;
             netForceX += forceValue.x();
             netForceY += forceValue.y();
-        });
+        }
         
         // Set the x and y components of the net force
         return new Vector().x(netForceX).y(netForceY);
@@ -251,57 +173,18 @@ function (Vector, utils, _) {
         //
         // The callback is a latch function that returns a `Boolean`
         // and is `true` when it is time to stop
-        //
-        // If a state (`Object`) or time (`Number`) is used as the limit
-        // a function needs to be created to check these for the callback
-        // If a function is given for the limit, it is used as the callback
+        // 
+        // limit: {Number} create function to check limit
+        // (Future) limit: {Object (State)| function}
         //
         // Callback form:
         // @param {Object} body Instance of body
         // @param {Number} elapsed Time that has elapsed during advance
         // @return {Boolean} true = stop advance, false = continue
         
-        if (_.isFunction(limit)) {
-            
-            // limit is a function, so use as stopAdvance check callback
-            return limit;
-            
-        } else if (_.isObject(limit)) {
-            
-            // limit by state for stopAdvance callback
-            return function (body, elapsed) {
-                // Compare the values in limit 
-                // to the corresponding values in the current state
-                return _.isEqual(
-                    limit, 
-                    // Pick out the values from state that are specified in limit
-                    _.pick(body.state(), _.keys(limit))
-                );
-                
-                /*
-                isEqual compares too objects
-                limit = { v: 10 } (Stop when v = 10)
-                isEqual({ v: 10 }, (state) { v: 10 }) => true
-                
-                since the state might include extra things which would mess up isEqual
-                isEqual({ v: 10 }, { x: 100, v: 10 }) => false
-                
-                we pick out only the parts of the state that we need
-                _.keys(limit) = ['v']
-                _.pick({ x: 100, v: 10 }, ['v']) => { v: 10 }
-                
-                which is then good to compare to the limit
-                isEqual({ v: 10 }, ...) => true
-                */
-            };
-            
-        } else {
-            
-            // limit by elapsed time for stopAdvance callback
-            return function (body, elapsed) {
-                return elapsed >= limit;       
-            }
-            
+        // limit by elapsed time for stopAdvance callback
+        return function (body, elapsed) {
+            return elapsed >= limit;       
         }
     };
 

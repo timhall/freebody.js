@@ -1,3 +1,7 @@
+/**
+ * General-purpose utilities
+ */
+
 define(
 [],
 function () {
@@ -96,21 +100,67 @@ function () {
      */
     
     utils.angle = function (start, finish) {
-        if (start.y-finish.y === 0) {
-            var angle = 90;
-        } else {
-            var angle = utils.degrees(Math.atan((start.y-finish.y)/(start.x-finish.x)));
-        }
-        
-        // Let's do quadrants
-        // A, x = 3, y = 3, theta = 45, atan(1) = 0.76, 45
-        // B, x = -3, y = 3, theta = 135, atan(-1) = -0.76, -45 -> add 180, 135
-        // C, x = -3, y = -3, theta = -135 / 225, atan(1) = 0.76, 45 -> add 180, 225
-        // D, x = 3, y = -3, theta = -45 / 315, atan(-1) = -0.76, -45
-        // -> whenever x is negative, add 180
-        
-        return (finish.x-start.x < 0) ? angle + 180 : angle;
+        return utils.degrees(Math.atan2(start.y-finish.y, start.x-finish.x));
     };
+    
+    // Lodash methods
+    // [Lo-Dash](http://lodash.com/)
+    
+    /**
+     * Checks if `value` is a number
+     *
+     * @param {Mixed} value The value to check
+     * @returns {Boolean} Returns `true` if the `value` is a number, else `false`
+     * @source [Lo-Dash](http://lodash.com/)
+     */
+    utils.isNumber = function (value) {
+        return typeof value == 'number' || toString.call(value) == '[object Number]';
+    }
+    
+    /**
+     * Checks if `value` is a function.
+     *
+     * @param {Mixed} value The value to check
+     * @returns {Boolean} Returns `true` if the `value` is a function, else `false`
+     * @source [Lo-Dash](http://lodash.com/)
+     */
+     
+    utils.isFunction = function (value) {
+        return typeof value == 'function';
+    };
+    // fallback for older versions of Chrome and Safari
+    if (utils.isFunction(/x/)) {
+        utils.isFunction = function(value) {
+          return toString.call(value) == '[object Function]';
+        };
+    }
+    
+    /**
+     * Checks if the `callback` returns a truthy value for **any** element of a
+     * `collection`. The function returns as soon as it finds passing value, and
+     * does not iterate over the entire `collection`. The `callback` is 
+     * invoked with three arguments; (value, index|key, collection).
+     *
+     * @param {Array} collection The collection to iterate over.
+     * @param {Function} callback The function called per iteration.
+     * @returns {Boolean} Returns `true` if any element passes the callback check,
+     *  else `false`
+     * @source [Lo-Dash](http://lodash.com/)
+     */
+     
+    utils.any = function (collection, callback) {
+        var result;
+    
+        var index = -1,
+            length = collection.length;
+    
+        while (++index < length) {
+            if ((result = callback(collection[index], index, collection))) {
+                break;
+            }
+        }
+        return !!result;
+    }
     
     return utils;
 });
