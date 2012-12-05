@@ -12,13 +12,8 @@ window.requestAnimationFrame = window.parent.requestAnimationFrame;
 
 // Load all dependencies and start game
 require(    
-['src/Body', 'src/Vector', 'src/Engine', 'src/gravity', 'src/Planet', 'src/Ship'],
-function (Body, Vector, Engine, gravity, Planet, Ship) {
-    
-    
-    
-    
-    
+['src/freebody', 'src/Engine', 'src/Planet', 'src/Ship'],
+function (freebody, Engine, Planet, Ship) {
     
     var Ticker = function (options) {
         var ticker = this,
@@ -68,10 +63,10 @@ function (Body, Vector, Engine, gravity, Planet, Ship) {
         addShip = function () {
             // Create new ship            
             var ship = new Ship({}, Circle, stage);
-            window.parent.ship = ship;
+            
             // Apply gravity to ship
-            gravity.planetary(ship, planet1);
-            gravity.planetary(ship, planet2);
+            freebody.gravity.planetary(ship, planet1, 1.9);
+            freebody.gravity.planetary(ship, planet2, 1.9);
             
             // Add ship to engine
             engine.objects.push(ship);

@@ -1,15 +1,15 @@
 define(
-['src/Body', 'src/Vector'],
-function (Body, Vector) {
+['src/freebody'],
+function (freebody) {
     var Ship = function (options, Circle, stage) {
         var ship = this,
             display;
         
-        ship = new Body({
+        ship = new freebody.Body({
             mass: 10,
             x: options && options.x || window.parent.innerWidth/4,
             y: options && options.y || window.parent.innerHeight/4,
-            v: new Vector().x(100).y(10) //{ x: 100, y: 10 }
+            v: new freebody.Vector().x(100).y(10) //{ x: 100, y: 10 }
             
         });
         

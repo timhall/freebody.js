@@ -87,7 +87,7 @@ function () {
      */
     
     utils.distance = function (start, finish) {
-        return utils.hypotenuse(start.x-finish.x,start.y-finish.y);
+        return utils.hypotenuse(start.x - finish.x, start.y - finish.y);
     };
     
     /**
@@ -96,11 +96,11 @@ function () {
      * 
      * @param {Body} start
      * @param {Body} destination
-     * @return {Number} angle (in degrees
+     * @return {Number} angle (in degrees)
      */
     
     utils.angle = function (start, finish) {
-        return utils.degrees(Math.atan2(start.y-finish.y, start.x-finish.x));
+        return utils.degrees(Math.atan2(finish.y-start.y, finish.x-start.x));
     };
     
     // Lodash methods
