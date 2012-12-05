@@ -21,7 +21,7 @@ function (Vector, utils) {
     
     gravity.simple = function (body, acceleration) {
         // TEMP: 90 to correspond with down
-        var force = new Vector().angle(90);
+        var force = new Vector().angle(-90);
         acceleration = acceleration || G_EARTH;
         
         // Gravitational force (not acceleration)
