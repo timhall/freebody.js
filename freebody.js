@@ -1,5 +1,5 @@
 define(
-['./utils', './Vector', './Body', './gravity'],
+['src/utils', 'src/Vector', 'src/Body', 'src/gravity'],
 function (utils, Vector, Body, gravity) {
     var freebody = {
         utils: utils,

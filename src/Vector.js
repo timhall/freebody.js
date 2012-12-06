@@ -3,7 +3,7 @@
  */
 
 define(
-['utils'],
+['src/utils'],
 function (utils) {
     
     /**

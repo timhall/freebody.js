@@ -3,7 +3,7 @@
  */
 
 define(
-['Vector', 'utils'],
+['src/Vector', 'src/utils'],
 function (Vector, utils) {
     
     /**

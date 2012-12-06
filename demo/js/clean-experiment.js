@@ -12,7 +12,7 @@ window.requestAnimationFrame = window.parent.requestAnimationFrame;
 
 // Load all dependencies and start game
 require(    
-['src/freebody', 'demo/js/Engine', 'demo/js/Planet', 'demo/js/Ship'],
+['freebody', 'demo/js/Engine', 'demo/js/Planet', 'demo/js/Ship'],
 function (freebody, Engine, Planet, Ship) {
     
     var Ticker = function (options) {

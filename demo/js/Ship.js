@@ -1,5 +1,5 @@
 define(
-['src/freebody'],
+['freebody'],
 function (freebody) {
     var Ship = function (options, Circle, stage) {
         var ship = this,

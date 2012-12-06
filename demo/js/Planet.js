@@ -1,7 +1,7 @@
 //Create Planet with x-position, y-position, mass, and radius
 
 define(
-['src/freebody'],
+['freebody'],
 function (freebody) {
     var Planet = function (options, Circle, stage) {
         var planet = this,
