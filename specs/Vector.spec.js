@@ -1,5 +1,3 @@
-/// <reference path="_references.js" />
-
 define(
 ['src/Vector', 'public/js/lodash.min'],
 function (Vector, _) {
@@ -84,47 +82,5 @@ function (Vector, _) {
             expect(_spec.vector.magnitude()).toEqual(10);
             expect(_spec.vector.angle()).toEqual(180);
         });
-        
-        /*describe('Time-based vectors', function () {
-            beforeEach(function () {
-                _spec.vector = Vector.createWithDuration({ magnitude: 10, angle: 90 }, 2000);
-            });
-            
-            it('should create duration vector as function', function () {
-                expect(_.isFunction(_spec.vector)).toEqual(true);
-            });
-            
-            it('should return value with no elapsed and not change lifetime', function () {
-                expect(_spec.vector().y()).toEqual(10);
-                expect(_spec.vector.lifetime).toEqual(0);
-            });
-            
-            it('should add elapsed to lifetime', function () {
-                expect(_spec.vector(1000).y()).toEqual(10);
-                expect(_spec.vector.lifetime).toEqual(1000);
-                expect(_spec.vector(999).y()).toEqual(10);
-                expect(_spec.vector.lifetime).toEqual(1999);
-            });
-            
-            it('should return null after expiration', function () {
-                expect(_spec.vector(1999)).not.toEqual(null);
-                expect(_spec.vector(1)).toEqual(null);
-                expect(_spec.vector()).toEqual(null);
-            });
-            
-            it('should be able to add time to duration', function () {
-                expect(_spec.vector(1999)).not.toEqual(null);
-                expect(_spec.vector(1)).toEqual(null);
-                expect(_spec.vector()).toEqual(null);
-                
-                _spec.vector.duration += 1000;
-                expect(_spec.vector(999)).not.toEqual(null);
-                expect(_spec.vector(1)).toEqual(null);
-                
-                _spec.vector(1000);
-                _spec.vector.duration += 500;
-                expect(_spec.vector()).toEqual(null);
-            });
-        });*/
     });
 });

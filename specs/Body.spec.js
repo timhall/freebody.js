@@ -1,28 +1,10 @@
-/// <reference path="_references.js" />
-
-// define = create a new module
 define(
-    
-// Write out any dependencies that are needed
 ['src/Body', 'src/Vector'],
-
-// and pass them into the module
 function (Body, Vector) {
-    
-    // This is just a convenient way to save 'this' since 
-    // 'this' is all sorts of headaches in js
     var _spec = this;
-
     
-    // I like to set up a main group for each spec module
     describe('Body Class', function () {
-        
-        // This is stuff that is run before every spec below
-        // I like to put stuff here so that it gets reset every time
-        // and you don't get any conflicts between specs
         beforeEach(function () {
-            
-            // (we'll talk about this in a sec)
             _spec.atRest = new Body({ 
                 mass: 10, 
                 x: 0, y: 0,
@@ -51,15 +33,8 @@ function (Body, Vector) {
                 expect(body.v.magnitude()).toEqual(0);
             });
         });
-
         
-        // So within the main module this is a group of specs 
-        // (Newton's 1st, cute right!)
         describe("Newton's First Law (Inertia)", function () {
-            
-            // This is just some sentence to describe the spec
-            // Traditional style is that it should begin with 'should'
-            // ala It 'should do something cool'
             it('An object at rest will remain at rest', function () {                
                 // Check on the body after 30 seconds
                 _spec.atRest.advance(30000);

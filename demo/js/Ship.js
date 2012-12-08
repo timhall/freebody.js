@@ -9,7 +9,7 @@ function (freebody) {
             mass: 10,
             x: options && options.x || window.parent.innerWidth/4,
             y: options && options.y || window.parent.innerHeight/4,
-            v: new freebody.Vector().x(100).y(10) //{ x: 100, y: 10 }
+            v: new freebody.Vector().x(100).y(20) //{ x: 100, y: 10 }
             
         });
         
