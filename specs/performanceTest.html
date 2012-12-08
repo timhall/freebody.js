@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Performance Test</title>
+
+    <script src="../src/rAF.js" type="text/javascript"></script>
+    <script src="../public/js/require.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        require.config({
+            baseUrl: '../'
+        });
+
+        require(
+        ['src/Vector', 'src/vector.v2'],
+        function (Vector, vector) {
+            var rAF = window.requestAnimationFrame,
+                quantity = 1000,
+                maxSize = 1000,
+                collection = [],
+                stopped = false,
+                runtime = 5000,
+                value;
+            
+            // Create # new Vectors every frame (overwriting existing) and update each vector
+            var test1 = function () {
+                stopped = false;
+                //collection = [];
+                
+                var run = function () {
+                    if (!stopped) {
+                        rAF(run);
+                        
+                        for (i = 0; i < quantity; i += 1) {
+                            value = new Vector({ magnitude: 10, angle: 45 });
+                        }
+                        
+                        /*for (i = 0; i < (collection.length - maxSize); i += 1) {
+                            collection.splice(0, 1);
+                        }
+                        
+                        for (i = 0; i < collection.length / 10; i += 1) {
+                            collection[i].x(3);
+                            collection[i].y(4);
+                        }*/
+                    }
+                }
+                
+                                
+                run();
+            };
+            
+            var test2 = function () {
+                stopped = false;
+                //collection = [];
+                
+                var run = function () {
+                    if (!stopped) {
+                        rAF(run);
+                        
+                        for (i = 0; i < quantity; i += 1) {
+                            value = { magnitude: 10, angle: 45 } 
+                            vector(value);
+                        }
+                        
+                        /*for (i = 0; i < (collection.length - maxSize); i += 1) {
+                            collection.splice(0, 1);
+                        }
+                        
+                        for (i = 0; i < collection.length / 10; i += 1) {
+                            vector(collection[i]).x(3);
+                            vector(collection[i]).y(4);
+                        }*/
+                    }
+                }
+                
+                
+                run();
+            };
+            
+            var stop = function () {
+                stopped = true;
+                console.log('Stopped');
+            }
+            
+            window.stop = stop;
+            window.test1 = test1;
+            window.test2 = test2;
+        })
+    </script>
+</head>
+
+<body></body>
+</html>
