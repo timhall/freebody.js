@@ -1,7 +1,5 @@
-/// <reference path="_references.js" />
-
 define(
-['src/vector.v2', 'public/js/lodash.min'],
+['src/vector.exp', 'public/js/lodash.min'],
 function (vector, _) {
     var _spec = this,
         expectVectorIsDefined = function (value) {
@@ -17,12 +15,12 @@ function (vector, _) {
             expect(value.y).toEqual(y || 0);   
         }
     
-    describe('Vector Class (V2)', function () {
+    describe('Vector Class (Experiment)', function () {
         describe('Initialization', function() {
             it('should add required properties to empty object', function () {
                 var test = {};
                 
-                vector(test);
+                vector.create(test);
                 expectVectorIsDefined(test);
                 expectVectorHasValues(test);
             });
@@ -30,25 +28,16 @@ function (vector, _) {
             it('should use defined values', function () {
                 var test = { magnitude: 10, angle: 45 };
                 
-                vector(test);
+                vector.create(test);
                 expectVectorIsDefined(test);
                 expect(test.magnitude).toEqual(10);
                 expect(test.angle).toEqual(45);
             });
             
-            it('should overwrite invalid x/y values', function () {
-                var test = { magnitude: 10, angle: 45, x: 3, y: 4 };
-                
-                vector(test);
-                expectVectorIsDefined(test);
-                expect(test.x).not.toEqual(3);
-                expect(test.y).not.toEqual(4);
-            });
-            
             it('should set based on just x/y values', function () {
                 var test = { x: 3, y: 4 };
                 
-                vector(test);
+                vector.create(test);
                 expectVectorIsDefined(test);
                 expect(test.magnitude).toEqual(5);
                 expect(test.angle).toBeCloseTo(Math.tan(3/4) * 180 / Math.PI, 0);
@@ -59,17 +48,17 @@ function (vector, _) {
             it('should return value', function () {
                 var test = { x: 3, y: 4 };
                 
-                expect(vector(test).value.magnitude).toEqual(5);
+                expect(vector.create(test).value.magnitude).toEqual(5);
             });
             
             it('should get/set magnitude', function () {
                 var test = { x: 3, y: 3 };
                 
                 // Getter
-                expect(vector(test).magnitude()).toBeCloseTo(3 * Math.sqrt(2), 0);
+                expect(vector.create(test).magnitude()).toBeCloseTo(3 * Math.sqrt(2), 0);
                 
                 // Setter
-                vector(test).magnitude(Math.sqrt(2))
+                vector.update(test).magnitude(Math.sqrt(2))
                 expect(test.x).toBeCloseTo(1);
             });
             
@@ -77,10 +66,10 @@ function (vector, _) {
                 var test = { x: 1, y: 1 };
                 
                 // Getter
-                expect(vector(test).angle()).toBeCloseTo(45);
+                expect(vector.create(test).angle()).toBeCloseTo(45);
                 
                 // Setter
-                vector(test).angle(0)
+                vector.update(test).angle(0)
                 expect(test.x).toBeCloseTo(Math.sqrt(2));
             });
             
@@ -88,10 +77,11 @@ function (vector, _) {
                 var test = { magnitude: 4 * Math.sqrt(2), angle: 45 };
                 
                 // Getter
-                expect(vector(test).x()).toBeCloseTo(4);
+                expect(vector.create(test).x()).toBeCloseTo(4);
+                expect(test.y).toBeCloseTo(4);
                 
                 // Setter
-                vector(test).x(3)
+                vector.update(test).x(3)
                 expect(test.magnitude).toBeCloseTo(5);
             });
             
@@ -99,16 +89,16 @@ function (vector, _) {
                 var test = { magnitude: 3 * Math.sqrt(2), angle: 45 };
                 
                 // Getter
-                expect(vector(test).y()).toBeCloseTo(3);
+                expect(vector.create(test).y()).toBeCloseTo(3);
                 
                 // Setter
-                vector(test).y(4)
+                vector.update(test).y(4)
                 expect(test.magnitude).toBeCloseTo(5);
             });
             
             it('should chain operations', function () {
                 var test = {};
-                expect(vector(test).x(3).y(4).magnitude()).toEqual(5);
+                expect(vector.create(test).x(3).y(4).magnitude()).toEqual(5);
             });
         })
     });
