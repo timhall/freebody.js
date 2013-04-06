@@ -2,9 +2,7 @@
  * gravity helpers
  */
 
-define(
-['src/Vector', 'src/utils'],
-function (Vector, utils) {
+freebody.gravity = (function (Vector, utils) {
     
     var gravity = {};
     
@@ -64,4 +62,4 @@ function (Vector, utils) {
     };
     
     return gravity;
-});    
+})(freebody.Vector, freebody.utils);   

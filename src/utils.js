@@ -2,9 +2,7 @@
  * General-purpose utilities
  */
 
-define(
-[],
-function () {
+freebody.utils = (function () {
     var utils = {};
     
     /**
@@ -113,6 +111,7 @@ function () {
      * @returns {Boolean} Returns `true` if the `value` is a number, else `false`
      * @source [Lo-Dash](http://lodash.com/)
      */
+
     utils.isNumber = function (value) {
         return typeof value == 'number' || toString.call(value) == '[object Number]';
     }
@@ -163,4 +162,4 @@ function () {
     }
     
     return utils;
-});
+})();

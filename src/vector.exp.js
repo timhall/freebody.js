@@ -1,6 +1,5 @@
-define(
-['src/utils'],
-function (utils) {
+
+freebody.vector = (function (utils) {
     
     /*
     Goal:
@@ -156,4 +155,4 @@ function (utils) {
     
     return vector;
     
-});
+})(freebody.utils);

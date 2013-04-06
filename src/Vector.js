@@ -2,16 +2,13 @@
  * Vector class for simply representing force, velocity, etc.
  */
 
-define(
-['src/utils'],
-function (utils) {
+freebody.Vector = (function (utils) {
     
     /**
      * @class Vector
      * @param {Number} [magnitude]
      * @param {Number} [angle]
      */
-    
     var Vector = function (magnitude, angle) {
         // Set instance values for magnitude and angle
         this._magnitude = (magnitude || 0);
@@ -33,7 +30,6 @@ function (utils) {
          * @prototype
          * @chainable
          */
-         
         magnitude: function (value) {
             if (value !== undefined) { 
                 // Setter 
@@ -55,7 +51,6 @@ function (utils) {
          * @prototype
          * @chainable
          */
-        
         angle: function (value) {
             if (value !== undefined) { 
                 // Setter 
@@ -77,7 +72,6 @@ function (utils) {
          * @prototype
          * @chainable
          */
-         
         x: function (value) {
             if (value !== undefined) { 
                 setMagnitudeAndAngle(this, value, this.y()); 
@@ -94,8 +88,7 @@ function (utils) {
          * @return {Number} y-component
          * @prototype
          * @chainable
-         */
-                
+         */     
         y: function (value) {
             if (value !== undefined) { 
                 setMagnitudeAndAngle(this, this.x(), value); 
@@ -111,6 +104,6 @@ function (utils) {
         vector._angle = utils.degrees(Math.atan2(yValue, xValue)); 
     }
     
-    window.Vector = Vector;
     return Vector;
-});
+
+})(freebody.utils);

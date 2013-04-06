@@ -1,6 +1,4 @@
-define(
-['src/Body', 'src/Vector', 'src/gravity', 'src/utils'],
-function (Body, Vector, gravity, utils) {
+describe('Projectile Motion', function () {
     var _spec = this;
     var error = 0.2;
     
@@ -9,13 +7,13 @@ function (Body, Vector, gravity, utils) {
         // from the horizontal at a velocity of 39.47 m/s.
         
         beforeEach(function() {
-            _spec.projectile = new Body({ 
+            _spec.projectile = new freebody.Body({ 
                 mass: 50, 
-                v: new Vector().magnitude(39.47).angle(58.770)
+                v: new freebody.Vector().magnitude(39.47).angle(58.770)
             });
             
-            // This applies simple gravity to the body
-            gravity.simple(_spec.projectile);            
+            // This applies simple freebody.gravity to the body
+            freebody.gravity.simple(_spec.projectile);            
         });
         
         it('a) Maximum range of the projectile', function () {
@@ -48,10 +46,6 @@ function (Body, Vector, gravity, utils) {
             _spec.projectile.advance(6.89*1000);
             //_spec.projectile.advance({ x: 0, y: { gt: 0 } });
             expect(_spec.projectile.v.angle()).toBeCloseTo(-58.7858);
-            
-            //console.log(_spec.projectile);
-            window.body = _spec.projectile;
-            window.utils = utils;
         });
         
     });

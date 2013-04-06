@@ -1,17 +1,14 @@
-/*
+/**
  * Body with mass, position, velocity, acceleration, and forces
  */
 
-define(
-['src/Vector', 'src/utils'],
-function (Vector, utils) {
+freebody.Body = (function (Vector, utils) {
     
     /**
      * @class Body
      * @param {Object} [options]
      *     Any options to set inline (mass, x, y, v, a)
      */
-    
     var Body = function (options) {
         // Set the default mass, position, velocity, and acceleration
         this.mass = (options && options.mass) || 0;
@@ -25,8 +22,8 @@ function (Vector, utils) {
         this.lifetime = 0;
         
         return this;
-    };
-    
+    } 
+
     /**
      * Global options for body
      * @static
@@ -58,7 +55,6 @@ function (Vector, utils) {
      *     (Use Body.options.timestep by default)
      * @chainable
      */
-
     Body.prototype.advance = function (limit, timestep) {
         var body = this,
             elapsed = 0,
@@ -133,7 +129,6 @@ function (Vector, utils) {
      * @return {Boolean}
      * @prototype
      */
-     
     Body.prototype.isVariable = function () {
         // Check if forces contains a function
         return !!utils.any(this.forces, utils.isFunction);
@@ -145,7 +140,6 @@ function (Vector, utils) {
      * @return {Vector}
      * @prototype
      */
-    
     Body.prototype.netForce = function () {
         var body = this,
             netForceX = 0,
@@ -189,4 +183,5 @@ function (Vector, utils) {
     };
 
     return Body;
-});
+
+})(freebody.Vector, freebody.utils);

@@ -1,0 +1,31 @@
+{
+  "name": "freebody",
+  "description": "Simple physics for javascript",
+  "version": "0.5.0",
+  "homepage": "https://github.com/timhall/freebody.js",
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "scripts": {
+    "start": "grunt server"
+  },
+  "author": {
+    "name": "Tim Hall",
+    "email": "tim.hall.engr@gmail.com",
+    "web": "http://timhall.github.io"
+  },
+  "github": "https://github.com/timhall/freebody.js",  
+  "devDependencies": {
+    "grunt-contrib-jasmine": "~0.3.1",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-plato": "~0.1.4",
+    "grunt-preprocess": "git://github.com/onehealth/grunt-preprocess.git#grunt-0.4.0",
+    "grunt-contrib-uglify": "~0.1.1",
+    "grunt-contrib-concat": "~0.1.2",
+    "grunt-template-jasmine-istanbul": "~0.1.1",
+    "grunt-contrib-watch": "~0.2.0",
+    "grunt-contrib-connect": "~0.1.2"
+  }
+}

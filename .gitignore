@@ -1,4 +1,7 @@
 .c9revisions/
+node_modules/
+.grunt/
+npm-debug.log
 
 #################
 ## Eclipse
