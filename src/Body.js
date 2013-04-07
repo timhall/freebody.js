@@ -146,15 +146,18 @@ freebody.Body = (function (Vector, utils) {
         for (var i = 0, max = body.forces.length; i < max; i += 1) {
             // If force is function evaluate to get vector
             forceValue = utils.isFunction(body.forces[i]) 
-                ? body.forces[i]() 
+                ? body.forces[i](body) 
                 : body.forces[i];
             
             netForceX += forceValue.x();
             netForceY += forceValue.y();
         }
         
+        // Get existing net force or create new vector
+        this._netForce = this._netForce || new Vector();
+        
         // Set the x and y components of the net force
-        return new Vector().x(netForceX).y(netForceY);
+        return this._netForce.x(netForceX).y(netForceY);
     };
     
     /**

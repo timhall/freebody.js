@@ -86,8 +86,21 @@ describe('Body Class', function () {
             
             expect(path.length).toEqual(3);
             expect(path[0].x).toEqual(1);
-            expect(path[1].x).toEqual(2)
-            expect(path[2].x).toEqual(3)
-        })
+            expect(path[1].x).toEqual(2);
+            expect(path[2].x).toEqual(3);
+        });
+        
+        it('should work with gravity', function () {
+            // Apply simple gravity to body
+            freebody.gravity.simple(_spec.atRest);
+            
+            // Look out 3 seconds with 1s intervals
+            var path = _spec.atRest.path(3000, 1000);
+            
+            expect(path.length).toEqual(3);
+            expect(path[0].y).toEqual(0);
+            expect(path[1].y).toBeCloseTo(-9.8, 0.01);
+            expect(path[2].y).toBeCloseTo(-29.4, 0.01);
+        });
     });
 });

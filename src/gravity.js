@@ -19,7 +19,7 @@ freebody.gravity = (function (Vector, utils) {
         acceleration = acceleration || G_EARTH;
         
         // Gravitational force (not acceleration)
-        var g = function(){
+        var g = function(body){
             force.magnitude(acceleration * body.mass);
             return force;
         };
@@ -44,7 +44,7 @@ freebody.gravity = (function (Vector, utils) {
         power = power || 2;
         
         // Gravitation force
-        var g = function() {
+        var g = function(body) {
             force.magnitude(
                 GM / Math.pow(utils.distance(body, planet), power) * body.mass    
             );
