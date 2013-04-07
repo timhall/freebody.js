@@ -44,7 +44,7 @@ describe('Body Class', function () {
 
         it('unless acted on by an unbalanced force', function () {
             // Apply an a force for 1 second and then check on it
-            _spec.atRest.forces.push(new freebody.Vector({ magnitude: 4, angle: 45 }));
+            _spec.atRest.forces.push(new freebody.Vector(4, 45));
             _spec.atRest.advance(1000, 10);
                 
             // Should have moved
@@ -63,6 +63,31 @@ describe('Body Class', function () {
             // Should have stayed in motion
             expect(_spec.inMotion.x).toEqual(30);
             expect(_spec.inMotion.y).toEqual(0);
+        })
+    });
+    
+    describe('Looking into the future', function () {
+        beforeEach(function () {
+            // Apply a force
+            _spec.atRest.v = new freebody.Vector(1, 0);    
+        });
+        
+        it('should not advance object during prediction', function () {
+            // Look 1 second into the future
+            var path = _spec.atRest.path(1000);
+            
+            expect(_spec.atRest.lifetime).toEqual(0);
+            expect(path.length).toBeGreaterThan(0);
+        });
+        
+        it('should store intermediate points', function () {
+            // Look 3 seconds into the future and increment by 1s
+            var path = _spec.atRest.path(3000, 1000);
+            
+            expect(path.length).toEqual(3);
+            expect(path[0].x).toEqual(1);
+            expect(path[1].x).toEqual(2)
+            expect(path[2].x).toEqual(3)
         })
     });
 });

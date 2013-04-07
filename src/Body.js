@@ -157,6 +157,41 @@ freebody.Body = (function (Vector, utils) {
         return new Vector().x(netForceX).y(netForceY);
     };
     
+    /**
+     * Calculate path for specified ms into the future
+     * 
+     * @param {Number} ms
+     * @param {Number} timestep
+     * @returns {Array} path points ({ x, y })
+     */
+    Body.prototype.path = function (ms, timestep) {
+        // Maybe just create a clone of 'this'
+        // and advance...
+        
+        var clone = cloneBody(this),
+            elapsed = 0,
+            path = [],
+            stopAdvance;
+            
+        timestep = timestep || Body.options.timestep;
+        
+        if (timestep > 0) {
+            // Create stop advance callback
+            stopAdvance = createStopAdvanceCallback(ms);
+            
+            while(!stopAdvance(clone, elapsed) && elapsed < Body.options.maxAdvanceTime) {
+                // Update elapsed time
+                elapsed += timestep; 
+                
+                // Move object and store position
+                clone.move(timestep);
+                path.push({x:clone.x, y:clone.y});
+            }
+        }
+        window.body = clone;
+        return path;
+    }
+    
     // Create stop advance callback based on the specified limit
     var createStopAdvanceCallback = function (limit) {
         // Advance requires a callback function that it checks on each step 
@@ -178,6 +213,13 @@ freebody.Body = (function (Vector, utils) {
             return elapsed >= limit;       
         }
     };
+    
+    var cloneBody = function (original) {
+        var clone = new Body(original);
+        clone.forces = original.forces;  
+        console.log(original, clone);
+        return clone;
+    }
 
     return Body;
 })(freebody.Vector, freebody.utils);    
