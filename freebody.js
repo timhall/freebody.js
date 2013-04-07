@@ -488,7 +488,13 @@ freebody.Body = (function (Vector, utils) {
      */
     Body.prototype.clone = function () {
         var original = this,
-            cloned = new Body(original);
+            cloned = new Body({
+                mass: original.mass,
+                x: original.x,
+                y: original.y
+            });
+        cloned.v = new freebody.Vector(original.v.magnitude(), original.v.angle());
+        cloned.a = new freebody.Vector(original.a.magnitude(), original.a.angle());
         cloned.forces = original.forces;  
         return cloned;
     }

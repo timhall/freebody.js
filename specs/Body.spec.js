@@ -102,5 +102,17 @@ describe('Body Class', function () {
             expect(path[1].y).toBeCloseTo(-9.8, 0.01);
             expect(path[2].y).toBeCloseTo(-29.4, 0.01);
         });
+        
+        it('should not affect velocity or acceleration of original body', function () {
+            // Apply simple gravity to body
+            freebody.gravity.simple(_spec.atRest);
+            
+            expect(_spec.atRest.v.y()).toEqual(0);
+            
+            // Look out 3 seconds with 1s intervals
+            var path = _spec.atRest.path(3000, 1000);
+            
+            expect(_spec.atRest.v.y()).toEqual(0);
+        });
     });
 });
