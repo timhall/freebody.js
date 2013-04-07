@@ -1,10 +1,7 @@
-/**
- * Body with mass, position, velocity, acceleration, and forces
- */
-
 freebody.Body = (function (Vector, utils) {
-    
     /**
+     * Body with mass, position, velocity, acceleration, and forces
+     *
      * @class Body
      * @param {Object} [options]
      *     Any options to set inline (mass, x, y, v, a)
@@ -183,5 +180,4 @@ freebody.Body = (function (Vector, utils) {
     };
 
     return Body;
-
-})(freebody.Vector, freebody.utils);
+})(freebody.Vector, freebody.utils);    

@@ -1,7 +1,3 @@
-/**
- * gravity helpers
- */
-
 freebody.gravity = (function (Vector, utils) {
     
     var gravity = {};

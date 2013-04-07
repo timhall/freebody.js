@@ -1,7 +1,3 @@
-/**
- * General-purpose utilities
- */
-
 freebody.utils = (function () {
     var utils = {};
     

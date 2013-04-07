@@ -7,10 +7,6 @@ var freebody = (function(global){
     // Define and export the freebody namespace
     var freebody = {};
 
-/**
- * General-purpose utilities
- */
-
 freebody.utils = (function () {
     var utils = {};
     
@@ -173,17 +169,16 @@ freebody.utils = (function () {
     return utils;
 })();
 
-/**
- * Vector class for simply representing force, velocity, etc.
- */
-
 freebody.Vector = (function (utils) {
     
     /**
+     * Vector class for simply representing force, velocity, etc.
+     * 
      * @class Vector
      * @param {Number} [magnitude]
      * @param {Number} [angle]
      */
+
     var Vector = function (magnitude, angle) {
         // Set instance values for magnitude and angle
         this._magnitude = (magnitude || 0);
@@ -205,6 +200,7 @@ freebody.Vector = (function (utils) {
          * @prototype
          * @chainable
          */
+
         magnitude: function (value) {
             if (value !== undefined) { 
                 // Setter 
@@ -226,6 +222,7 @@ freebody.Vector = (function (utils) {
          * @prototype
          * @chainable
          */
+
         angle: function (value) {
             if (value !== undefined) { 
                 // Setter 
@@ -247,6 +244,7 @@ freebody.Vector = (function (utils) {
          * @prototype
          * @chainable
          */
+
         x: function (value) {
             if (value !== undefined) { 
                 setMagnitudeAndAngle(this, value, this.y()); 
@@ -263,7 +261,8 @@ freebody.Vector = (function (utils) {
          * @return {Number} y-component
          * @prototype
          * @chainable
-         */     
+         */ 
+             
         y: function (value) {
             if (value !== undefined) { 
                 setMagnitudeAndAngle(this, this.x(), value); 
@@ -283,13 +282,10 @@ freebody.Vector = (function (utils) {
 
 })(freebody.utils);
 
-/**
- * Body with mass, position, velocity, acceleration, and forces
- */
-
 freebody.Body = (function (Vector, utils) {
-    
     /**
+     * Body with mass, position, velocity, acceleration, and forces
+     *
      * @class Body
      * @param {Object} [options]
      *     Any options to set inline (mass, x, y, v, a)
@@ -468,12 +464,7 @@ freebody.Body = (function (Vector, utils) {
     };
 
     return Body;
-
-})(freebody.Vector, freebody.utils);
-
-/**
- * gravity helpers
- */
+})(freebody.Vector, freebody.utils);    
 
 freebody.gravity = (function (Vector, utils) {
     
