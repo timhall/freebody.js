@@ -109,6 +109,8 @@ freebody.utils = (function () {
     // Lodash methods
     // [Lo-Dash](http://lodash.com/)
     
+    var toString = Object().toString;
+    
     /**
      * Checks if `value` is a number
      *
@@ -136,7 +138,7 @@ freebody.utils = (function () {
     if (utils.isFunction(/x/)) {
         utils.isFunction = function(value) {
           return toString.call(value) == '[object Function]';
-        };
+        }
     }
     
     /**
@@ -455,7 +457,7 @@ freebody.Body = (function (Vector, utils) {
         // Maybe just create a clone of 'this'
         // and advance...
         
-        var clone = cloneBody(this),
+        var clone = this.clone(),
             elapsed = 0,
             path = [],
             stopAdvance;
@@ -479,6 +481,18 @@ freebody.Body = (function (Vector, utils) {
         return path;
     }
     
+    /**
+     * Get a clone of the body
+     *
+     * @returns {Body}
+     */
+    Body.prototype.clone = function () {
+        var original = this,
+            cloned = new Body(original);
+        cloned.forces = original.forces;  
+        return cloned;
+    }
+    
     // Create stop advance callback based on the specified limit
     var createStopAdvanceCallback = function (limit) {
         // Advance requires a callback function that it checks on each step 
@@ -500,13 +514,6 @@ freebody.Body = (function (Vector, utils) {
             return elapsed >= limit;       
         }
     };
-    
-    var cloneBody = function (original) {
-        var clone = new Body(original);
-        clone.forces = original.forces;  
-        console.log(original, clone);
-        return clone;
-    }
 
     return Body;
 })(freebody.Vector, freebody.utils);    

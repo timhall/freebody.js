@@ -100,6 +100,8 @@ freebody.utils = (function () {
     // Lodash methods
     // [Lo-Dash](http://lodash.com/)
     
+    var toString = Object().toString;
+    
     /**
      * Checks if `value` is a number
      *
@@ -127,7 +129,7 @@ freebody.utils = (function () {
     if (utils.isFunction(/x/)) {
         utils.isFunction = function(value) {
           return toString.call(value) == '[object Function]';
-        };
+        }
     }
     
     /**
