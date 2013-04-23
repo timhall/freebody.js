@@ -474,7 +474,11 @@ freebody.Body = (function (Vector, utils) {
                 
                 // Move object and store position
                 clone.move(timestep);
-                path.push({x:clone.x, y:clone.y});
+                path.push({
+                    x: clone.x, 
+                    y: clone.y,
+                    t: elapsed
+                });
             }
         }
         window.body = clone;
