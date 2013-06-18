@@ -6,11 +6,11 @@
  * @param {Number} [angle]
  */
 var Vector = freebody.Vector = function (magnitude, angle) {
-    // Set instance values for magnitude and angle
-    this._magnitude = (magnitude || 0);
-    this._angle = (angle || 0);
-    
-    return this;
+// Set instance values for magnitude and angle
+this._magnitude = (magnitude || 0);
+this._angle = (angle || 0);
+
+return this;
 };
 
 /**
@@ -22,16 +22,16 @@ var Vector = freebody.Vector = function (magnitude, angle) {
  * @chainable
  */
 Vector.prototype.magnitude = function (value) {
-    if (value !== undefined) { 
-        // Setter 
-        this._magnitude = value; 
+  if (value !== undefined) { 
+    // Setter 
+    this._magnitude = value; 
 
-        // Return parent for chaining 
-        return this; 
-    } else { 
-        // Getter 
-        return this._magnitude; 
-    }
+    // Return parent for chaining 
+    return this; 
+  } else { 
+    // Getter 
+    return this._magnitude; 
+  }
 };
 
 /**
@@ -43,16 +43,16 @@ Vector.prototype.magnitude = function (value) {
  * @chainable
  */
 Vector.prototype.angle = function (value) {
-    if (value !== undefined) { 
-        // Setter 
-        this._angle = value; 
+  if (value !== undefined) { 
+    // Setter 
+    this._angle = value; 
 
-        // Return parent for chaining 
-        return this; 
-    } else { 
-        // Getter 
-        return this._angle; 
-    }
+    // Return parent for chaining 
+    return this; 
+  } else { 
+    // Getter 
+    return this._angle; 
+  }
 };
 
 /**
@@ -64,12 +64,12 @@ Vector.prototype.angle = function (value) {
  * @chainable
  */
 Vector.prototype.x = function (value) {
-    if (value !== undefined) { 
-        setMagnitudeAndAngle(this, value, this.y()); 
-        return this; 
-    } else { 
-        return this._magnitude * Math.cos(utils.radians(this._angle)); 
-    }
+  if (value !== undefined) { 
+    setMagnitudeAndAngle(this, value, this.y()); 
+    return this; 
+  } else { 
+    return this._magnitude * Math.cos(utils.radians(this._angle)); 
+  }
 };
 
 /**
@@ -81,15 +81,15 @@ Vector.prototype.x = function (value) {
  * @chainable
  */     
 Vector.prototype.y = function (value) {
-    if (value !== undefined) { 
-        setMagnitudeAndAngle(this, this.x(), value); 
-        return this; 
-    } else { 
-        return this._magnitude * Math.sin(utils.radians(this._angle)); 
-    }    
+  if (value !== undefined) { 
+    setMagnitudeAndAngle(this, this.x(), value); 
+    return this; 
+  } else { 
+    return this._magnitude * Math.sin(utils.radians(this._angle)); 
+  }    
 };
 
 var setMagnitudeAndAngle = function (vector, xValue, yValue) { 
-    vector._magnitude = utils.hypotenuse(xValue, yValue); 
-    vector._angle = utils.degrees(Math.atan2(yValue, xValue)); 
+  vector._magnitude = utils.hypotenuse(xValue, yValue); 
+  vector._angle = utils.degrees(Math.atan2(yValue, xValue)); 
 };

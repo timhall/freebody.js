@@ -7,7 +7,7 @@ var utils = freebody.utils = {};
  * @return {Number} angle in radians
  */
 utils.radians = function (angle) {
-    return angle * (Math.PI / 180); 
+  return angle * (Math.PI / 180); 
 };
 
 /**
@@ -17,7 +17,7 @@ utils.radians = function (angle) {
  * @return {Number} angle in degrees
  */
 utils.degrees = function (angle) {
-    return angle * (180 / Math.PI);  
+  return angle * (180 / Math.PI);  
 };
 
 /**
@@ -28,7 +28,7 @@ utils.degrees = function (angle) {
  * @return {Number} length of hypotenuse
  */
 utils.hypotenuse = function (x, y) {
-    return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));  
+  return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));  
 };
 
 /**
@@ -39,8 +39,8 @@ utils.hypotenuse = function (x, y) {
  * @return {Number} rounded number
  */
 utils.roundToDec = function (number, dec) {
-    var multiplier = Math.pow(10, dec);
-    return Math.round(number * multiplier) / multiplier;
+  var multiplier = Math.pow(10, dec);
+  return Math.round(number * multiplier) / multiplier;
 };
 
 /**
@@ -51,8 +51,8 @@ utils.roundToDec = function (number, dec) {
  * @return {Number} rounded number
  */
 utils.roundToPrecision = function (number, precision) {
-    var dec = Math.round(utils.log10(1 / (precision || 1)));
-    return utils.roundToDec(number, dec);
+  var dec = Math.round(utils.log10(1 / (precision || 1)));
+  return utils.roundToDec(number, dec);
 };
 
 /**
@@ -62,7 +62,7 @@ utils.roundToPrecision = function (number, precision) {
  * @return {Number} log base-10
  */
 utils.log10 = function (number) {
-    return Math.log(number) / Math.LN10;  
+  return Math.log(number) / Math.LN10;  
 };
 
 /**
@@ -73,7 +73,7 @@ utils.log10 = function (number) {
  * @return {Number} distance
  */
 utils.distance = function (start, finish) {
-    return utils.hypotenuse(start.x - finish.x, start.y - finish.y);
+  return utils.hypotenuse(start.x - finish.x, start.y - finish.y);
 };
 
 /**
@@ -85,5 +85,5 @@ utils.distance = function (start, finish) {
  * @return {Number} angle (in degrees)
  */
 utils.angle = function (start, finish) {
-    return utils.degrees(Math.atan2(finish.y-start.y, finish.x-start.x));
+  return utils.degrees(Math.atan2(finish.y-start.y, finish.x-start.x));
 };
