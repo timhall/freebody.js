@@ -9,7 +9,7 @@
     root.freebody = factory(root._);
   }
 }(this, function (_) {
-  "use strict";
+  'use strict';
 
   // Define and export the freebody namespace
   var freebody = {};

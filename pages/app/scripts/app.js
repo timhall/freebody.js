@@ -1,6 +1,6 @@
 /*global define */
-define([], function () {
-    'use strict';
+define(['freebody'], function (freebody) {
+  'use strict';
 
-    return '\'Allo \'Allo!';
+  
 });

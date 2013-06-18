@@ -12,7 +12,7 @@
     root.freebody = factory(root._);
   }
 }(this, function (_) {
-  "use strict";
+  'use strict';
 
   // Define and export the freebody namespace
   var freebody = {};
@@ -245,7 +245,7 @@ Body.options = {
 Body.prototype.advance = function (limit, timestep) {
   var body = this;
   var elapsed = 0;
-  var stopAdvance;
+  var stop;
   
   if (timestep === undefined) {
     if (body.isVariable()) {
@@ -358,7 +358,7 @@ Body.prototype.path = function (ms, timestep) {
   var clone = this.clone();
   var elapsed = 0;
   var path = [];
-  var stopAdvance;
+  var stop;
       
   timestep = timestep || Body.options.timestep;
   

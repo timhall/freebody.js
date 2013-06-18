@@ -1,15 +1,17 @@
 require.config({
-    paths: {
-        jquery: '../bower_components/jquery/jquery',
-    },
-    shim: {
-        
+  paths: {
+    jquery: '../bower_components/jquery/jquery',
+    underscore: '../bower_components/lodash/lodash'
+  },
+  shim: {
+    underscore: {
+      exports: '_'
     }
+  }
 });
 
-require(['app', 'jquery'], function (app, $) {
-    'use strict';
-    // use app here
-    console.log(app);
-    console.log('Running jQuery %s', $().jquery);
+require(['app'], function (app) {
+  'use strict';
+
+
 });
