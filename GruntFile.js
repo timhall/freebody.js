@@ -9,8 +9,12 @@ module.exports = function (grunt) {
                 '\n'
         },
 
-        lint: {
-            files: ['src/*.js']
+        jshint: {
+            options: {
+                jshintrc: '.jshintrc'
+            },
+            src: ['src/*.js', 'specs/*.spec.js'],
+            built: ['freebody.js']
         },
 
         uglify: {
@@ -24,7 +28,7 @@ module.exports = function (grunt) {
         },
 
         preprocess: {
-            freebody_build: {
+            build: {
                 files: {
                     'freebody.js': 'src/build/freebody.js'
                 }
@@ -41,18 +45,29 @@ module.exports = function (grunt) {
             }
         },
 
+        copy: {
+            built: {
+                files: [
+                    {src:'freebody.js', dest:'pages/app/scripts/freebody.js'}
+                ] 
+            }
+        },
+
         jasmine: {
             options: {
-                specs: 'specs/**/*.spec.js'
+                specs: 'specs/**/*.spec.js',
+                vendor: 'node_modules/lodash/lodash.js'
             },
             freebody: {
-                src: [
-                    'src/build/freebody.js',
-                    'src/utils.js',
-                    'src/Vector.js',
-                    'src/Body.js',
-                    'src/gravity.js'
-                ]
+                src: ['freebody.js']
+            }
+        },
+
+        watch: {
+            all: {
+                files: ['src/*.js', 'specs/*.spec.js', 'src/build/freebody.js', 'GruntFile.js'],
+                tasks: ['test'],
+                interupt: true
             }
         }
     });
@@ -61,8 +76,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('test', ['jasmine:freebody']);
-    // Default task.
-    grunt.registerTask('default', ['jasmine:freebody', 'preprocess', 'concat', 'uglify']);
+    grunt.registerTask('test', ['jshint:src', 'jasmine:freebody', 'watch:all']);
+    grunt.registerTask('build', ['preprocess', 'concat', 'jshint:built'])
+    grunt.registerTask('default', ['test', 'build', 'uglify', 'copy']);
 };

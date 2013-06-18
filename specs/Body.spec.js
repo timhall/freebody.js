@@ -63,7 +63,7 @@ describe('Body Class', function () {
             // Should have stayed in motion
             expect(_spec.inMotion.x).toEqual(30);
             expect(_spec.inMotion.y).toEqual(0);
-        })
+        });
     });
     
     describe('Looking into the future', function () {

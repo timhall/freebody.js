@@ -25,7 +25,7 @@ describe('freebody.Vector Class', function () {
         // ...
         //xValue = roundToDec(Math.sqrt(3),3);
         //vector.y(1);
-        _spec.vector.x(10)
+        _spec.vector.x(10);
             
         expect(_spec.vector.magnitude()).toEqual(10);
         expect(_spec.vector.angle()).toEqual(0);
@@ -37,11 +37,11 @@ describe('freebody.Vector Class', function () {
         _spec.vector.y(1);
             
         expect(_spec.vector.magnitude()).toBeCloseTo(2, 0.00001);
-        expect(_spec.vector.angle()).toBeCloseTo(30)
+        expect(_spec.vector.angle()).toBeCloseTo(30);
     });
         
     it('should set magnitude and angle from y-component', function () {
-        _spec.vector.y(10)
+        _spec.vector.y(10);
             
         expect(_spec.vector.magnitude()).toEqual(10);
         expect(_spec.vector.angle()).toEqual(90);
@@ -53,7 +53,7 @@ describe('freebody.Vector Class', function () {
         _spec.vector.y(Math.sqrt(3));
             
         expect(_spec.vector.magnitude()).toBeCloseTo(2, 0.00001);
-        expect(_spec.vector.angle()).toBeCloseTo(60)
+        expect(_spec.vector.angle()).toBeCloseTo(60);
     });
         
     it('should set magnitude and angle to 0 with 0 x and y components', function () {
