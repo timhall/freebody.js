@@ -1,7 +1,17 @@
 // Freebody.js - Free-body mechanics / physics engine in javascript
 // (c) Tim Hall - https://github.com/timhall/freebody.js - License: MIT
 
-var freebody = (function(global, _, undefined){
+(function (root, factory) {
+  var dep = 'underscore';
+
+  if (typeof exports === 'object') {
+    module.exports = factory(require(dep));
+  } else if (typeof define === 'function' && define.amd) {
+    define([dep], factory);
+  } else {
+    root.freebody = factory(root._);
+  }
+}(this, function (_) {
   "use strict";
 
   // Define and export the freebody namespace
@@ -454,4 +464,4 @@ gravity.planetary = function (body, planet, power) {
 };   
 
   return freebody;
-})(this, _);
+}));
