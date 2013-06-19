@@ -1,35 +1,101 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Freebody.js</title>
-  <meta name="viewport" content="width=device-width">
-  
-  <link rel="stylesheet" href="styles/f3b12f69.main.css">
-  <script src="scripts/vendor/f7f27360.modernizr.js"></script>
-</head>
-<body><div class="container">
-  <h1>Freebody.js</h1>
-  <p>Examples coming soon</p>
-  <a href="https://github.com/timhall/freebody.js">Freebody.js</a>    
-</div>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Freebody.js by timhall</title>
 
-  <!--[if lt IE 7]>
-    <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-  <![endif]-->
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Freebody.js</h1>
+        <p>Free-body mechanics / physics engine in javascript</p>
 
-  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-  <script>
-    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src='//www.google-analytics.com/ga.js';
-    s.parentNode.insertBefore(g,s)}(document,'script'));
-  </script>
+        <p class="view"><a href="https://github.com/timhall/freebody.js">View the Project on GitHub <small>timhall/freebody.js</small></a></p>
 
-  <script data-main="scripts/bd50850f.main" src="bower_components/requirejs/require.js"></script>
-</body>
+
+        <ul>
+          <li><a href="https://github.com/timhall/freebody.js/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/timhall/freebody.js/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/timhall/freebody.js">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="freebodyjs" class="anchor" href="#freebodyjs"><span class="octicon octicon-link"></span></a>FreeBody.js</h1>
+
+<p>Free-body mechanics / physics engine in javascript.</p>
+
+<p>This little library was designed to give some basic structure to the velocities and forces acting on bodies and the resulting behavior over time. Here are some examples of what it will become:</p>
+
+<div class="highlight"><pre><span class="c1">// Create a new physics body</span>
+<span class="kd">var</span> <span class="nx">ball</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">freebody</span><span class="p">.</span><span class="nx">Body</span><span class="p">();</span>
+<span class="nx">ball</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="nx">ball</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nx">ball</span><span class="p">.</span><span class="nx">mass</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+<span class="c1">// Set an initial velocity</span>
+<span class="nx">ball</span><span class="p">.</span><span class="nx">v</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">freebody</span><span class="p">.</span><span class="nx">Vector</span><span class="p">().</span><span class="nx">magnitude</span><span class="p">(</span><span class="mi">10</span><span class="p">).</span><span class="nx">angle</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">// See how far the ball has travelled in 4 seconds</span>
+<span class="nx">ball</span><span class="p">.</span><span class="nx">advance</span><span class="p">(</span><span class="mi">4000</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Distance:'</span><span class="p">,</span> <span class="nx">ball</span><span class="p">.</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// -&gt; Distance: 50</span>
+
+<span class="c1">// Add gravity to the ball</span>
+<span class="nx">freebody</span><span class="p">.</span><span class="nx">gravity</span><span class="p">.</span><span class="nx">simple</span><span class="p">(</span><span class="nx">ball</span><span class="p">);</span>
+
+<span class="c1">// See how fast it's going after 3 seconds</span>
+<span class="nx">ball</span><span class="p">.</span><span class="nx">advance</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Speed:'</span><span class="p">,</span> <span class="nx">ball</span><span class="p">.</span><span class="nx">v</span><span class="p">.</span><span class="nx">y</span><span class="p">());</span> <span class="c1">// -&gt; Speed: -19.6</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Acceleration:'</span><span class="p">,</span> <span class="nx">ball</span><span class="p">.</span><span class="nx">a</span><span class="p">.</span><span class="nx">y</span><span class="p">());</span> <span class="c1">// -&gt; Acceleration: -9.8</span>
+
+<span class="c1">// Strap a rocket to the ball</span>
+<span class="nx">ball</span><span class="p">.</span><span class="nx">forces</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="k">new</span> <span class="nx">freebody</span><span class="p">.</span><span class="nx">Vector</span><span class="p">().</span><span class="nx">magnitude</span><span class="p">(</span><span class="mi">100</span><span class="p">).</span><span class="nx">angle</span><span class="p">(</span><span class="mi">45</span><span class="p">));</span>
+
+<span class="c1">// See how high it is after 12 seconds</span>
+<span class="nx">ball</span><span class="p">.</span><span class="nx">advance</span><span class="p">(</span><span class="mi">12000</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Height:'</span><span class="p">,</span> <span class="nx">ball</span><span class="p">.</span><span class="nx">y</span><span class="p">);</span> <span class="c1">// -&gt; Height: 57.7</span>
+</pre></div>
+
+<h2>
+<a name="vectors" class="anchor" href="#vectors"><span class="octicon octicon-link"></span></a>Vectors</h2>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">force</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">freebody</span><span class="p">.</span><span class="nx">Vector</span><span class="p">();</span>
+
+<span class="c1">// Set magnitude and angle of force</span>
+<span class="nx">force</span><span class="p">.</span><span class="nx">magnitude</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
+<span class="nx">force</span><span class="p">.</span><span class="nx">angle</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+
+<span class="c1">// Get x- and y-components</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'force, x:'</span><span class="p">,</span> <span class="nx">force</span><span class="p">.</span><span class="nx">x</span><span class="p">());</span> <span class="c1">// -&gt; force, x: 10.39</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'force, y:'</span><span class="p">,</span> <span class="nx">force</span><span class="p">.</span><span class="nx">y</span><span class="p">());</span> <span class="c1">// -&gt; force, y: 6.0</span>
+
+<span class="c1">// Can also create force from components</span>
+<span class="nx">force</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">freebody</span><span class="p">.</span><span class="nx">Vector</span><span class="p">();</span>
+<span class="nx">force</span><span class="p">.</span><span class="nx">x</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="nx">force</span><span class="p">.</span><span class="nx">y</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+
+<span class="c1">// Get net force</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'force, net:'</span><span class="p">,</span> <span class="nx">force</span><span class="p">.</span><span class="nx">magnitude</span><span class="p">());</span> <span class="c1">// -&gt; force, net: 5</span>
+
+<span class="c1">// Finally, set values quickly inline</span>
+<span class="nx">force</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">freebody</span><span class="p">.</span><span class="nx">Vector</span><span class="p">().</span><span class="nx">magnitude</span><span class="p">(</span><span class="mi">12</span><span class="p">).</span><span class="nx">angle</span><span class="p">(</span><span class="mi">45</span><span class="p">);</span>
+<span class="nx">force</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">freebody</span><span class="p">.</span><span class="nx">Vector</span><span class="p">().</span><span class="nx">x</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="nx">y</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+</pre></div>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/timhall">timhall</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
 </html>
